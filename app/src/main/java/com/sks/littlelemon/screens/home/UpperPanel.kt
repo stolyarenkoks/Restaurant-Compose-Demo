@@ -24,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sks.littlelemon.R
 
+// MARK: - View
+
 @Composable
 fun UpperPanel(){
     val context = LocalContext.current
@@ -81,6 +83,8 @@ fun UpperPanel(){
         }
     }
 }
+
+// MARK: - Preview
 
 @Preview(showBackground = true)
 @Composable

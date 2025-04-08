@@ -23,6 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sks.littlelemon.R
 
+// MARK: - View
+
 @Composable
 fun LoginScreen(onUserSignedIn: () -> Unit) {
     var username by remember {
@@ -40,6 +42,8 @@ fun LoginScreen(onUserSignedIn: () -> Unit) {
         onUserSignedIn = onUserSignedIn
     )
 }
+
+// MARK: - Private View Components
 
 @Composable
 private fun LoginView(
@@ -94,6 +98,8 @@ private fun LoginView(
     }
 }
 
+// MARK: - Private Methods
+
 private fun validateCredentials(
     username: String,
     password: String
@@ -104,6 +110,8 @@ private fun validateCredentials(
         "Invalid credentials. Please try again."
     }
 }
+
+// MARK: - Preview
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

@@ -19,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.sks.littlelemon.ui.theme.LittleLemonTheme
 
+// MARK: - Activity
+
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +33,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+// MARK: - View
 
 @Composable
 fun MainView(isUserSignedIn: Boolean) {
@@ -60,14 +64,16 @@ fun MainView(isUserSignedIn: Boolean) {
     )
 }
 
-@Preview(name = "MainView - User Signed In", showBackground = true, showSystemUi = true)
-@Composable
-fun MainPreviewUserSignedIn() {
-    MainView(isUserSignedIn = true)
-}
+// MARK: - Preview
 
 @Preview(name = "MainView - User Not Signed In", showBackground = true, showSystemUi = true)
 @Composable
 fun MainPreviewUserNotSignedIn() {
     MainView(isUserSignedIn = false)
+}
+
+@Preview(name = "MainView - User Signed In", showBackground = true, showSystemUi = true)
+@Composable
+fun MainPreviewUserSignedIn() {
+    MainView(isUserSignedIn = true)
 }

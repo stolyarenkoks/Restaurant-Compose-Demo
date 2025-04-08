@@ -22,10 +22,14 @@ import com.sks.littlelemon.R
 import com.sks.littlelemon.screens.home.LowerPanel
 import com.sks.littlelemon.screens.home.UpperPanel
 
+// MARK: - View
+
 @Composable
 fun HomeScreen(onUserSignedOut: () -> Unit) {
     HomeView(onUserSignedOut = onUserSignedOut)
 }
+
+// MARK: - Private View Components
 
 @Composable
 private fun HomeView(onUserSignedOut: () -> Unit = {}) {
@@ -51,6 +55,8 @@ private fun HomeView(onUserSignedOut: () -> Unit = {}) {
         }
     }
 }
+
+// MARK: - Preview
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

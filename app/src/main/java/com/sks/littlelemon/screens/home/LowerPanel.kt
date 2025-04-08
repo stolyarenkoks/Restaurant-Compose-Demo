@@ -1,5 +1,6 @@
 package com.sks.littlelemon.screens.home
 
+import StepperView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sks.littlelemon.R
 
+// MARK: - View
+
 @Composable
 fun LowerPanel() {
     Column {
@@ -32,8 +35,10 @@ fun LowerPanel() {
     }
 }
 
+// MARK: - Private View Components
+
 @Composable
-fun WeeklySpecialCard(){
+private fun WeeklySpecialCard() {
     Text(
         text = "Weekly Special",
         fontSize = 26.sp,
@@ -44,7 +49,7 @@ fun WeeklySpecialCard(){
 }
 
 @Composable
-fun MenuDish() {
+private fun MenuDish() {
     var count by rememberSaveable {
         mutableIntStateOf(0)
     }
@@ -82,7 +87,7 @@ fun MenuDish() {
         )
     }
 
-    Stepper(
+    StepperView(
         count = count,
         onAdd = { count++ },
         onRemove = { count-- }
@@ -95,41 +100,7 @@ fun MenuDish() {
     )
 }
 
-@Composable
-fun Stepper(
-    minStepValue: Int = 0,
-    maxStepValue: Int  = 10,
-    count: Int,
-    onAdd: () -> Unit,
-    onRemove: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .padding(horizontal = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Button(
-            onClick = {
-                if (count > minStepValue) {
-                    onRemove()
-                }
-            }
-        ) {
-            Text("-")
-        }
-
-        Text("$count")
-
-        Button(
-            onClick = {
-                if (count < maxStepValue) onAdd()
-            }
-        ) {
-            Text("+")
-        }
-    }
-}
+// MARK: - Preview
 
 @Preview(showBackground = true)
 @Composable
