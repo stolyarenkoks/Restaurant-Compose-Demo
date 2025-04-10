@@ -50,10 +50,7 @@ private fun WeeklySpecialCard() {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        )
+            .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         Text(
             text = stringResource(R.string.weekly_special),
@@ -77,24 +74,40 @@ private fun DishCell(dish: Dish, navController: NavHostController) {
             navController.navigate("${DishDetails.route}/${dish.id}")
         }
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = stringResource(dish.nameResourceId),
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = stringResource(dish.descriptionResourceId),
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 4.dp)
-            )
-            Text(
-                text = "$${dish.price}",
-                style = MaterialTheme.typography.titleSmall,
-                modifier = Modifier.padding(top = 4.dp)
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = stringResource(dish.nameResourceId),
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    text = stringResource(dish.descriptionResourceId),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier
+                        .fillMaxWidth(0.75f)
+                        .padding(top = 4.dp)
+                )
+                Text(
+                    text = "$${dish.price}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+            }
+            Image(
+                painter = painterResource(id = dish.imageResource),
+                contentDescription = stringResource(dish.nameResourceId),
+                modifier = Modifier
+                    .height(120.dp)
+                    .aspectRatio(1f)
+                    .clip(RoundedCornerShape(10.dp)),
+                contentScale = ContentScale.Crop
             )
         }
     }

@@ -40,23 +40,33 @@ fun UpperPanel(){
             fontWeight = FontWeight.Bold,
             color = Color(0xFFF4CE14)
         )
-        Text(
-            text = stringResource(id = R.string.location),
-            fontSize = 24.sp,
-            color = Color(0xFFEDEFEE)
-        )
+
         Row(
             modifier = Modifier
                 .padding(top = 18.dp)
         ) {
-            Text(
-                text = stringResource(id = R.string.description),
-                color = Color(0xFFEDEFEE),
-                fontSize = 18.sp,
+            Column(
                 modifier = Modifier
-                    .padding(bottom = 28.dp)
-                    .fillMaxWidth(0.6f)
-            )
+                    .padding(end = 8.dp)
+            ) {
+                Text(
+                    text = stringResource(id = R.string.location),
+                    fontSize = 24.sp,
+                    color = Color(0xFFEDEFEE),
+                    modifier = Modifier
+                        .padding(bottom = 8.dp)
+                )
+
+                Text(
+                    text = stringResource(id = R.string.description),
+                    color = Color(0xFFEDEFEE),
+                    fontSize = 18.sp,
+                    modifier = Modifier
+                        .padding(bottom = 16.dp)
+                        .fillMaxWidth(0.6f)
+                )
+            }
+
             Image(
                 painter = painterResource(id = R.drawable.upperpanelimage),
                 contentDescription = "Upper Panel Image",

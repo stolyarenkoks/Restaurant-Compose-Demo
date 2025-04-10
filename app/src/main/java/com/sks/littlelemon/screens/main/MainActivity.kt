@@ -49,9 +49,9 @@ class MainActivity : ComponentActivity() {
 // MARK: - View
 
 @Composable
-fun MainView() {
-    var isUserSignedIn by rememberSaveable { mutableStateOf(false) }
-    Log.d(TAG, "=== MAIN VIEW RENDERED, LOGIN STATE: $isUserSignedIn ===")
+fun MainView(isUserSignedIn: Boolean = false) {
+    var isUserSignedInState by rememberSaveable { mutableStateOf(isUserSignedIn) }
+    Log.d(TAG, "=== MAIN VIEW RENDERED, LOGIN STATE: $isUserSignedInState ===")
     
     val navController = rememberNavController()
     
@@ -64,13 +64,13 @@ fun MainView() {
                     .padding(paddingValues),
                 color = MaterialTheme.colorScheme.background
             ) {
-                if (isUserSignedIn) {
+                if (isUserSignedInState) {
                     Log.d(TAG, "=== SHOWING HOME SCREEN ===")
                     NavHost(navController = navController, startDestination = Home.route) {
                         composable(Home.route) {
                             HomeScreen(navController, onUserSignedOut = {
                                 Log.d(TAG, "=== USER SIGNED OUT ===")
-                                isUserSignedIn = false
+                                isUserSignedInState = false
                             })
                         }
                         composable(
@@ -85,7 +85,7 @@ fun MainView() {
                     Log.d(TAG, "=== SHOWING LOGIN SCREEN ===")
                     LoginScreen(onUserSignedIn = {
                         Log.d(TAG, "=== USER SIGNED IN CALLBACK RECEIVED ===")
-                        isUserSignedIn = true
+                        isUserSignedInState = true
                     })
                 }
             }
@@ -98,5 +98,11 @@ fun MainView() {
 @Preview(name = "MainView - User Not Signed In", showBackground = true, showSystemUi = true)
 @Composable
 fun MainPreviewUserNotSignedIn() {
-    MainView()
-} 
+    MainView(isUserSignedIn = false)
+}
+
+@Preview(name = "MainView - User Signed In", showBackground = true, showSystemUi = true)
+@Composable
+fun MainPreviewUserSignedIn() {
+    MainView(isUserSignedIn = true)
+}
