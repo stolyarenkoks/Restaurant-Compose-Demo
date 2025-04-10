@@ -1,3 +1,5 @@
+package com.sks.littlelemon.views
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -6,15 +8,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sks.littlelemon.screens.main.MainView
 
 @Composable
 fun StepperView(
     minStepValue: Int = 0,
     maxStepValue: Int  = 10,
-    count: Int,
-    onAdd: () -> Unit,
-    onRemove: () -> Unit
+    count: Int = 0,
+    onAdd: () -> Unit = {},
+    onRemove: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier
@@ -42,4 +46,10 @@ fun StepperView(
             Text("+")
         }
     }
+}
+
+@Preview(name = "StepperView")
+@Composable
+fun MainPreviewUserSignedIn() {
+    StepperView()
 }
