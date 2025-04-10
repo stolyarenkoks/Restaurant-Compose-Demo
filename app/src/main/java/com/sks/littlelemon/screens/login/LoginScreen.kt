@@ -1,3 +1,6 @@
+package com.sks.littlelemon.screens.login
+
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -18,10 +21,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sks.littlelemon.R
+
+private const val TAG = "LITTLE_LEMON_LOGIN"
 
 // MARK: - View
 
@@ -39,7 +45,10 @@ fun LoginScreen(onUserSignedIn: () -> Unit) {
         password = password,
         onUsernameChanged = { username = it },
         onPasswordChanged = { password = it },
-        onUserSignedIn = onUserSignedIn
+        onUserSignedIn = {
+            Log.d(TAG, "=== LOGIN SCREEN: Calling onUserSignedIn callback ===")
+            onUserSignedIn()
+        }
     )
 }
 
@@ -54,6 +63,8 @@ private fun LoginView(
     onUserSignedIn: () -> Unit = {}
 ) {
     val context = LocalContext.current
+    val invalidCredentialsMessage = stringResource(R.string.invalid_credentials)
+    
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -66,23 +77,27 @@ private fun LoginView(
         TextField(
             value = username,
             onValueChange = onUsernameChanged,
-            label = { Text(text = "Username") },
+            label = { Text(text = stringResource(R.string.username)) },
             modifier = Modifier.padding(10.dp)
         )
         TextField(
             value = password,
             onValueChange = onPasswordChanged,
-            label = { Text(text = "Password") },
+            label = { Text(text = stringResource(R.string.password)) },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.padding(10.dp),
         )
         Button(
             onClick = {
-                val validationResult = validateCredentials(username, password)
-                if (validationResult == null) {
+                Log.d(TAG, "=== LOGIN BUTTON CLICKED ===")
+                Log.d(TAG, "Username: $username")
+                Log.d(TAG, "Password: $password")
+                if (username == "" && password == "1") {
+                    Log.d(TAG, "=== CREDENTIALS VALID, TRYING TO SIGN IN ===")
                     onUserSignedIn()
                 } else {
-                    Toast.makeText(context, validationResult, Toast.LENGTH_LONG).show()
+                    Log.d(TAG, "=== INVALID CREDENTIALS ===")
+                    Toast.makeText(context, invalidCredentialsMessage, Toast.LENGTH_LONG).show()
                 }
             },
             colors = ButtonDefaults.buttonColors(
@@ -91,7 +106,7 @@ private fun LoginView(
             modifier = Modifier.padding(10.dp)
         ) {
             Text(
-                text = "Login",
+                text = stringResource(R.string.login),
                 color = Color(0xFFEDEFEE)
             )
         }
@@ -103,12 +118,8 @@ private fun LoginView(
 private fun validateCredentials(
     username: String,
     password: String
-): String? {
-    return if (username == "Konstantin" && password == "1234") {
-        null
-    } else {
-        "Invalid credentials. Please try again."
-    }
+): Boolean {
+    return username == "Konstantin" && password == "1234"
 }
 
 // MARK: - Preview

@@ -1,65 +1,34 @@
-import android.widget.Toast
-import androidx.compose.foundation.layout.Box
+package com.sks.littlelemon.screens.home
+
+import android.util.Log
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.VerticalAlignmentLine
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.sks.littlelemon.R
+import androidx.navigation.NavHostController
+import com.sks.littlelemon.repository.DishRepository
 import com.sks.littlelemon.screens.home.LowerPanel
-import com.sks.littlelemon.screens.home.UpperPanel
+import com.sks.littlelemon.screens.topBar.TopAppBar
 
-// MARK: - View
+private const val TAG = "LITTLE_LEMON_HOME"
 
 @Composable
-fun HomeScreen(onUserSignedOut: () -> Unit) {
-    HomeView(onUserSignedOut = onUserSignedOut)
+fun HomeScreen(navController: NavHostController, onUserSignedOut: () -> Unit) {
+    Log.d(TAG, "=== HOME SCREEN RENDERED ===")
+    HomeView(navController = navController, onUserSignedOut = onUserSignedOut)
 }
 
-// MARK: - Private View Components
-
 @Composable
-private fun HomeView(onUserSignedOut: () -> Unit = {}) {
-    Column() {
+private fun HomeView(navController: NavHostController, onUserSignedOut: () -> Unit = {}) {
+    Log.d(TAG, "Rendering basic HomeView")
+    val dishes = DishRepository.dishes
+    Log.d(TAG, "Got ${dishes.size} dishes from repository")
+    
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        TopAppBar()
         UpperPanel()
-        LowerPanel()
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        Button(
-            onClick = {
-                onUserSignedOut()
-            },
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7A0101)),
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(8.dp)
-        ) {
-            Text(
-                text = stringResource(id = R.string.logout),
-                color = Color(0xFFFFFFFF)
-            )
-        }
+        LowerPanel(navController = navController, dishes = dishes)
     }
-}
-
-// MARK: - Preview
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun HomeViewPreview() {
-    HomeView()
 }

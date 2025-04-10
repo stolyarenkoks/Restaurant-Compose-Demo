@@ -3,6 +3,35 @@
     <string name="title">Little Lemon</string>
     <string name="location">Chicago</string>
     <string name="description">We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</string>
-    <string name="orderbuttontext">Order Take Away</string>
+    <string name="order_button_text">Order Take Away</string>
+    <string name="weekly_special">Weekly Special</string>
+    <string name="add_for">Add for</string>
     <string name="logout">Logout</string>
+    <string name="menu">Menu</string>
+    <string name="dish_not_found">Dish not found</string>
+    
+    <!-- Login Screen -->
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="invalid_credentials">Invalid credentials. Please try again.</string>
+    
+    <!-- Dishes -->
+    <string name="greek_salad">Greek Salad</string>
+    <string name="greek_salad_description">The famous greek salad of crispy lettuce, peppers, olives, our Chicago.</string>
+    
+    <string name="lemon_dessert">Lemon Dessert</string>
+    <string name="lemon_dessert_description">Traditional homemade Italian Lemon Ricotta Cake.</string>
+    
+    <string name="bruschetta">Bruschetta</string>
+    <string name="bruschetta_description">Our Bruschetta is made from grilled bread that has been smeared with garlic and seasoned with salt and olive oil.</string>
+    
+    <string name="grilled_fish">Grilled Fish</string>
+    <string name="grilled_fish_description">Fish marinated in fresh orange and lemon juice. Grilled with orange and lemon wedges.</string>
+    
+    <string name="pasta">Pasta</string>
+    <string name="pasta_description">Penne with fried aubergines, cherry tomatoes, tomato sauce, fresh chilli, garlic, basil &amp; salted ricotta cheese.</string>
+    
+    <string name="lasagne">Lasagne</string>
+    <string name="lasagne_description">Oven-baked layers of pasta stuffed with Bolognese sauce, béchamel sauce, ham, Parmesan &amp; mozzarella cheese.</string>
 </resources>

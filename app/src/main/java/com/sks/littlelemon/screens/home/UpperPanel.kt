@@ -75,7 +75,7 @@ fun UpperPanel(){
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF4CE14))
         ) {
             Text(
-                text = stringResource(id = R.string.orderbuttontext),
+                text = stringResource(id = R.string.order_button_text),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF333333)
