@@ -27,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.sks.littlelemon.R
 import com.sks.littlelemon.models.Dish
 import com.sks.littlelemon.navigation.DishDetails
+import androidx.compose.ui.text.font.FontWeight
 
 private const val TAG = "LITTLE_LEMON_LOWER"
 
@@ -54,7 +55,9 @@ private fun WeeklySpecialCard() {
     ) {
         Text(
             text = stringResource(R.string.weekly_special),
-            style = MaterialTheme.typography.headlineLarge,
+            style = MaterialTheme.typography.headlineSmall.copy(
+                fontWeight = FontWeight.Bold
+            ),
             modifier = Modifier
                 .padding(16.dp)
         )
@@ -85,7 +88,9 @@ private fun DishCell(dish: Dish, navController: NavHostController) {
             ) {
                 Text(
                     text = stringResource(dish.nameResourceId),
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontWeight = FontWeight.Bold
+                    )
                 )
                 Text(
                     text = stringResource(dish.descriptionResourceId),

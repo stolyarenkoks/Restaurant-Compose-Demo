@@ -1,10 +1,11 @@
 package com.sks.littlelemon.views
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,29 +21,39 @@ fun StepperView(
     onRemove: () -> Unit = {}
 ) {
     Row(
-        modifier = Modifier
-            .padding(horizontal = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth(),
     ) {
-        Button(
+        TextButton(
             onClick = {
                 if (count > minStepValue) {
                     onRemove()
                 }
             }
         ) {
-            Text("-")
+            Text(
+                text = "-",
+                style = MaterialTheme.typography.headlineMedium
+            )
         }
 
-        Text("$count")
+        Text(
+            text = "$count",
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.padding(16.dp)
+        )
 
-        Button(
+        TextButton(
             onClick = {
-                if (count < maxStepValue) onAdd()
+                if (count < maxStepValue) {
+                    onAdd()
+                }
             }
         ) {
-            Text("+")
+            Text(
+                text = "+",
+                style = MaterialTheme.typography.headlineMedium
+            )
         }
     }
 }
