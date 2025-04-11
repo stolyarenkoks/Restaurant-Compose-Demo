@@ -2,37 +2,31 @@ package com.sks.littlelemon.screens.home
 
 import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.sks.littlelemon.R
 import com.sks.littlelemon.models.Dish
-import com.sks.littlelemon.navigation.DishDetails
 import androidx.compose.ui.text.font.FontWeight
+import com.sks.littlelemon.router.Router
 
 private const val TAG = "LITTLE_LEMON_LOWER"
 
 @Composable
-fun LowerPanel(navController: NavHostController, dishes: List<Dish> = listOf()) {
+fun HomeDishesView(navController: NavHostController, dishes: List<Dish> = listOf()) {
     Log.d(TAG, "Rendering LowerPanel with ${dishes.size} dishes")
     Column {
         WeeklySpecialCard()
@@ -74,7 +68,7 @@ private fun DishCell(dish: Dish, navController: NavHostController) {
             .padding(horizontal = 16.dp, vertical = 8.dp),
         onClick = {
             Log.d(TAG, "Dish clicked with ID: ${dish.id}")
-            navController.navigate("${DishDetails.route}/${dish.id}")
+            navController.navigate("${Router.dishDetailsRoute}/${dish.id}")
         }
     ) {
         Row(
@@ -105,6 +99,7 @@ private fun DishCell(dish: Dish, navController: NavHostController) {
                     modifier = Modifier.padding(top = 4.dp)
                 )
             }
+
             Image(
                 painter = painterResource(id = dish.imageResource),
                 contentDescription = stringResource(dish.nameResourceId),
@@ -116,11 +111,4 @@ private fun DishCell(dish: Dish, navController: NavHostController) {
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LowerPanelPreview() {
-    val navController = rememberNavController()
-    LowerPanel(navController = navController)
 }

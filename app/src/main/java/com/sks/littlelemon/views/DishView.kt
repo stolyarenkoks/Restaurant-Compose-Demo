@@ -14,12 +14,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.sks.littlelemon.models.Dish
-import com.sks.littlelemon.navigation.DishDetails
+import com.sks.littlelemon.router.Router
 
 private const val TAG = "LITTLE_LEMON_MENU_DISH_CELL"
 
 @Composable
-fun MenuDishCell(dish: Dish, navController: NavHostController) {
+fun DishView(dish: Dish, navController: NavHostController) {
     Log.d(TAG, "Rendering MenuDishCell for dish ID: ${dish.id}")
     
     Card(
@@ -28,7 +28,7 @@ fun MenuDishCell(dish: Dish, navController: NavHostController) {
             .padding(8.dp),
         onClick = {
             Log.d(TAG, "Dish clicked with ID: ${dish.id}")
-            navController.navigate("${DishDetails.route}/${dish.id}")
+            navController.navigate("${Router.dishDetailsRoute}/${dish.id}")
         }
     ) {
         Row(

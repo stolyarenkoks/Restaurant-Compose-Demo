@@ -12,7 +12,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -22,11 +21,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.sks.littlelemon.screens.details.DishDetails
+import com.sks.littlelemon.router.Router
 import com.sks.littlelemon.screens.home.HomeScreen
 import com.sks.littlelemon.screens.login.LoginScreen
-import com.sks.littlelemon.navigation.DishDetails as DishDetailsRoute
-import com.sks.littlelemon.navigation.Home
+import com.sks.littlelemon.screens.dishDetails.DishDetailsScreen
 import com.sks.littlelemon.ui.theme.LittleLemonTheme
 
 private const val TAG = "LITTLE_LEMON_MAIN"
@@ -66,19 +64,19 @@ fun MainView(isUserSignedIn: Boolean = false) {
             ) {
                 if (isUserSignedInState) {
                     Log.d(TAG, "=== SHOWING HOME SCREEN ===")
-                    NavHost(navController = navController, startDestination = Home.route) {
-                        composable(Home.route) {
+                    NavHost(navController = navController, startDestination = Router.homeRoute) {
+                        composable(Router.homeRoute) {
                             HomeScreen(navController, onUserSignedOut = {
                                 Log.d(TAG, "=== USER SIGNED OUT ===")
                                 isUserSignedInState = false
                             })
                         }
                         composable(
-                            DishDetailsRoute.route + "/{${DishDetailsRoute.argDishId}}",
-                            arguments = listOf(navArgument(DishDetailsRoute.argDishId) { type = NavType.IntType })
+                            Router.dishDetailsRoute + "/{${Router.dishDetailsArgDishId}}",
+                            arguments = listOf(navArgument(Router.dishDetailsArgDishId) { type = NavType.IntType })
                         ) {
-                            val id = requireNotNull(it.arguments?.getInt(DishDetailsRoute.argDishId)) { "Dish id is null" }
-                            DishDetails(id)
+                            val id = requireNotNull(it.arguments?.getInt(Router.dishDetailsArgDishId)) { "Dish id is null" }
+                            DishDetailsScreen(id)
                         }
                     }
                 } else {
@@ -97,12 +95,12 @@ fun MainView(isUserSignedIn: Boolean = false) {
 
 @Preview(name = "MainView - User Not Signed In", showBackground = true, showSystemUi = true)
 @Composable
-fun MainPreviewUserNotSignedIn() {
+private fun MainPreviewUserNotSignedIn() {
     MainView(isUserSignedIn = false)
 }
 
 @Preview(name = "MainView - User Signed In", showBackground = true, showSystemUi = true)
 @Composable
-fun MainPreviewUserSignedIn() {
+private fun MainPreviewUserSignedIn() {
     MainView(isUserSignedIn = true)
 }

@@ -27,7 +27,7 @@ import com.sks.littlelemon.R
 // MARK: - View
 
 @Composable
-fun UpperPanel(){
+fun HomeHeaderView() {
     val context = LocalContext.current
     Column(
         modifier = Modifier
@@ -73,6 +73,7 @@ fun UpperPanel(){
                 modifier = Modifier.clip(RoundedCornerShape(20.dp))
             )
         }
+
         Button(
             onClick = {
                 Toast.makeText(
@@ -92,12 +93,4 @@ fun UpperPanel(){
             )
         }
     }
-}
-
-// MARK: - Preview
-
-@Preview(showBackground = true)
-@Composable
-fun UpperPanelPreview(){
-    UpperPanel()
 }

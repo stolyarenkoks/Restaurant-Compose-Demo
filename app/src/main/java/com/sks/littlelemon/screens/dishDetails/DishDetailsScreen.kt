@@ -1,42 +1,36 @@
-package com.sks.littlelemon.screens.details
+package com.sks.littlelemon.screens.dishDetails
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sks.littlelemon.R
+import com.sks.littlelemon.models.Dish
 import com.sks.littlelemon.repository.DishRepository
 import com.sks.littlelemon.views.StepperView
 
+// MARK: - View
+
 @Composable
-fun DishDetails(id: Int) {
+fun DishDetailsScreen(id: Int) {
     val dish = DishRepository.getDish(id)
+
+    if (dish != null) {
+        DishDetailsView(dish = dish)
+    }
+}
+
+// MARK: - Private View Components
+
+@Composable
+private fun DishDetailsView(dish: Dish) {
     var count by remember { mutableIntStateOf(1) }
 
-    if (dish == null) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = stringResource(R.string.dish_not_found),
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
-        return
-    }
-    
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -81,8 +75,10 @@ fun DishDetails(id: Int) {
     }
 }
 
-@Preview
+// MARK: - Preview
+
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun DishDetailsPreview() {
-    DishDetails(id = 1)
+private fun LoginViewPreview() {
+    DishDetailsView(dish = DishRepository.getDish(id = 0)!!)
 }

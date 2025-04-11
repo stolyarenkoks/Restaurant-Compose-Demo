@@ -55,7 +55,7 @@ fun LoginScreen(onUserSignedIn: () -> Unit) {
 // MARK: - Private View Components
 
 @Composable
-private fun LoginView(
+fun LoginView(
     username: String = "",
     password: String = "",
     onUsernameChanged: (String) -> Unit = {},
