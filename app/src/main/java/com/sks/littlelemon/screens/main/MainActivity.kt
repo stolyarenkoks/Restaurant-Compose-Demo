@@ -21,10 +21,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.sks.littlelemon.router.Router
+import com.sks.littlelemon.destinations.DishDetails
+import com.sks.littlelemon.destinations.Home
+import com.sks.littlelemon.screens.dishDetails.DishDetailsScreen
 import com.sks.littlelemon.screens.home.HomeScreen
 import com.sks.littlelemon.screens.login.LoginScreen
-import com.sks.littlelemon.screens.dishDetails.DishDetailsScreen
 import com.sks.littlelemon.ui.theme.LittleLemonTheme
 
 private const val TAG = "LITTLE_LEMON_MAIN"
@@ -64,18 +65,18 @@ fun MainView(isUserSignedIn: Boolean = false) {
             ) {
                 if (isUserSignedInState) {
                     Log.d(TAG, "=== SHOWING HOME SCREEN ===")
-                    NavHost(navController = navController, startDestination = Router.homeRoute) {
-                        composable(Router.homeRoute) {
+                    NavHost(navController = navController, startDestination = Home.route) {
+                        composable(Home.route) {
                             HomeScreen(navController, onUserSignedOut = {
                                 Log.d(TAG, "=== USER SIGNED OUT ===")
                                 isUserSignedInState = false
                             })
                         }
                         composable(
-                            Router.dishDetailsRoute + "/{${Router.dishDetailsArgDishId}}",
-                            arguments = listOf(navArgument(Router.dishDetailsArgDishId) { type = NavType.IntType })
+                            DishDetails.route + "/{${DishDetails.dishId}}",
+                            arguments = listOf(navArgument(DishDetails.dishId) { type = NavType.IntType })
                         ) {
-                            val id = requireNotNull(it.arguments?.getInt(Router.dishDetailsArgDishId)) { "Dish id is null" }
+                            val id = requireNotNull(it.arguments?.getInt(DishDetails.dishId)) { "Dish id is null" }
                             DishDetailsScreen(id)
                         }
                     }

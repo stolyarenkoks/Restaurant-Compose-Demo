@@ -1,15 +1,24 @@
 package com.sks.littlelemon.screens.dishDetails
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.sks.littlelemon.R
 import com.sks.littlelemon.models.Dish
 import com.sks.littlelemon.repository.DishRepository
 import com.sks.littlelemon.views.StepperView
@@ -30,6 +39,7 @@ fun DishDetailsScreen(id: Int) {
 @Composable
 private fun DishDetailsView(dish: Dish) {
     var count by remember { mutableIntStateOf(1) }
+    val context = LocalContext.current
 
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -71,6 +81,26 @@ private fun DishDetailsView(dish: Dish) {
                     count--
                 }
             )
+
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    Toast.makeText(
+                        context,
+                        "Order received. Thank you!",
+                        Toast.LENGTH_LONG)
+                        .show()
+                },
+                shape = RoundedCornerShape(4.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF4CE14))
+            ) {
+                Text(
+                    text = "Add for $${dish.price}",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF333333)
+                )
+            }
         }
     }
 }
@@ -80,5 +110,5 @@ private fun DishDetailsView(dish: Dish) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun LoginViewPreview() {
-    DishDetailsView(dish = DishRepository.getDish(id = 0)!!)
+    DishDetailsView(dish = DishRepository.getDish(id = 1)!!)
 }
