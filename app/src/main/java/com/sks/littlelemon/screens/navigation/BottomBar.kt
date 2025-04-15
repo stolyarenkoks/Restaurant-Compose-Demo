@@ -1,11 +1,14 @@
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sks.littlelemon.destinations.Destinations
@@ -16,7 +19,10 @@ import com.sks.littlelemon.destinations.Profile
 fun BottomBar(navController: NavController) {
     val destinations = listOf<Destinations>(Home, Profile)
     val selectedIndex = rememberSaveable { mutableIntStateOf(0) }
-    NavigationBar {
+    NavigationBar(
+        containerColor = Color(0xFFFDF7FF),
+        tonalElevation = 0.dp
+    ) {
         destinations.forEachIndexed { index, destination ->
             NavigationBarItem(
                 label = {

@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -20,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.sks.littlelemon.R
 import com.sks.littlelemon.models.Dish
 import com.sks.littlelemon.repository.DishRepository
@@ -46,6 +48,7 @@ fun DishDetailsScreen(
         ) { paddingValues ->
             DishDetailsView(
                 dish = dish,
+                navController = navController,
                 modifier = Modifier.padding(paddingValues)
             )
         }
@@ -55,7 +58,11 @@ fun DishDetailsScreen(
 // MARK: - Private View Components
 
 @Composable
-private fun DishDetailsView(dish: Dish, modifier: Modifier = Modifier) {
+private fun DishDetailsView(
+    dish: Dish,
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
     var count by remember { mutableIntStateOf(1) }
     val context = LocalContext.current
 
@@ -66,8 +73,10 @@ private fun DishDetailsView(dish: Dish, modifier: Modifier = Modifier) {
         Image(
             painter = painterResource(id = dish.imageResource),
             contentDescription = stringResource(dish.nameResourceId),
+            contentScale = ContentScale.FillWidth,
             modifier = Modifier
-                .aspectRatio(1f)
+                .fillMaxWidth()
+                .heightIn(max = 300.dp)
         )
 
         Column(
@@ -106,9 +115,10 @@ private fun DishDetailsView(dish: Dish, modifier: Modifier = Modifier) {
                 onClick = {
                     Toast.makeText(
                         context,
-                        "Order received. Thank you!",
-                        Toast.LENGTH_LONG)
+                        "Order added to cart!",
+                        Toast.LENGTH_SHORT)
                         .show()
+                    navController.navigateUp()
                 },
                 shape = RoundedCornerShape(4.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF4CE14))
@@ -129,5 +139,8 @@ private fun DishDetailsView(dish: Dish, modifier: Modifier = Modifier) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun LoginViewPreview() {
-    DishDetailsView(dish = DishRepository.getDish(id = 1)!!)
+    DishDetailsView(
+        dish = DishRepository.getDish(id = 1)!!,
+        navController = rememberNavController()
+    )
 }

@@ -9,12 +9,12 @@ import com.sks.littlelemon.repository.DishRepository
 import com.sks.littlelemon.screens.navigation.TopBar
 
 @Composable
-fun HomeScreen(navController: NavHostController, onUserSignedOut: () -> Unit) {
-    HomeView(navController = navController, onUserSignedOut = onUserSignedOut)
+fun HomeScreen(navController: NavHostController) {
+    HomeView(navController = navController)
 }
 
 @Composable
-private fun HomeView(navController: NavHostController, onUserSignedOut: () -> Unit = {}) {
+private fun HomeView(navController: NavHostController) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {

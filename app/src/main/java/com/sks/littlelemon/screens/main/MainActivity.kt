@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -84,13 +85,14 @@ fun MainView(isUserSignedIn: Boolean = false) {
                 if (isUserSignedInState) {
                     NavHost(navController = navController, startDestination = Home.route) {
                         composable(Home.route) {
-                            HomeScreen(navController, onUserSignedOut = {
-                                isUserSignedInState = false
-                            })
+                            HomeScreen(navController)
                         }
                         composable(Profile.route) {
                             ProfileScreen(navController, onUserSignedOut = {
                                 isUserSignedInState = false
+                                navController.navigate(Home.route) {
+                                    popUpTo(0) { inclusive = true }
+                                }
                             })
                         }
                         composable(
