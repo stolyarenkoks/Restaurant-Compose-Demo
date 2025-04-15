@@ -47,7 +47,7 @@ fun TopBar(
         }
         
         Image(
-            painter = painterResource(id = R.drawable.littlelemonimgtxt_nobg),
+            painter = painterResource(id = R.drawable.logo_horizontal),
             contentDescription = "Little Lemon Logo",
             modifier = Modifier.fillMaxWidth(0.5F)
                 .padding(horizontal = 20.dp)
