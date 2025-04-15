@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -18,30 +19,48 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.sks.littlelemon.R
 import com.sks.littlelemon.models.Dish
 import com.sks.littlelemon.repository.DishRepository
+import com.sks.littlelemon.screens.navigation.TopBar
 import com.sks.littlelemon.views.StepperView
 
 // MARK: - View
 
 @Composable
-fun DishDetailsScreen(id: Int) {
+fun DishDetailsScreen(
+    id: Int,
+    navController: NavController
+) {
     val dish = DishRepository.getDish(id)
 
     if (dish != null) {
-        DishDetailsView(dish = dish)
+        Scaffold(
+            topBar = { 
+                TopBar(
+                    showBackButton = true,
+                    onBackClick = { navController.navigateUp() }
+                )
+            }
+        ) { paddingValues ->
+            DishDetailsView(
+                dish = dish,
+                modifier = Modifier.padding(paddingValues)
+            )
+        }
     }
 }
 
 // MARK: - Private View Components
 
 @Composable
-private fun DishDetailsView(dish: Dish) {
+private fun DishDetailsView(dish: Dish, modifier: Modifier = Modifier) {
     var count by remember { mutableIntStateOf(1) }
     val context = LocalContext.current
 
     Column(
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Image(

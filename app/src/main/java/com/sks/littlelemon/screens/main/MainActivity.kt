@@ -1,5 +1,6 @@
 package com.sks.littlelemon.screens.main
 
+import BottomBar
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -19,23 +20,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.sks.littlelemon.destinations.DishDetails
 import com.sks.littlelemon.destinations.Home
+import com.sks.littlelemon.destinations.Profile
 import com.sks.littlelemon.screens.dishDetails.DishDetailsScreen
 import com.sks.littlelemon.screens.home.HomeScreen
 import com.sks.littlelemon.screens.login.LoginScreen
+import com.sks.littlelemon.screens.profile.ProfileScreen
 import com.sks.littlelemon.ui.theme.LittleLemonTheme
-
-private const val TAG = "LITTLE_LEMON_MAIN"
 
 // MARK: - Activity
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "=== MAIN ACTIVITY CREATED ===")
 
         setContent {
             LittleLemonTheme {
@@ -45,17 +46,34 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// MARK: - Private Functions
+
+@Composable
+private fun shouldShowBottomBar(
+    isUserSignedIn: Boolean,
+    currentRoute: String?
+): Boolean {
+    val shouldShow = isUserSignedIn && currentRoute?.startsWith(DishDetails.route) != true
+    Log.d("MainActivity", "Current route: $currentRoute, Should show bottom bar: $shouldShow")
+    return shouldShow
+}
+
 // MARK: - View
 
 @Composable
 fun MainView(isUserSignedIn: Boolean = false) {
     var isUserSignedInState by rememberSaveable { mutableStateOf(isUserSignedIn) }
-    Log.d(TAG, "=== MAIN VIEW RENDERED, LOGIN STATE: $isUserSignedInState ===")
-    
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
     
     Scaffold(
         modifier = Modifier,
+        bottomBar = {
+            if (shouldShowBottomBar(isUserSignedInState, currentRoute)) {
+                BottomBar(navController = navController)
+            }
+        },
         content = { paddingValues ->
             Surface(
                 modifier = Modifier
@@ -64,26 +82,27 @@ fun MainView(isUserSignedIn: Boolean = false) {
                 color = MaterialTheme.colorScheme.background
             ) {
                 if (isUserSignedInState) {
-                    Log.d(TAG, "=== SHOWING HOME SCREEN ===")
                     NavHost(navController = navController, startDestination = Home.route) {
                         composable(Home.route) {
                             HomeScreen(navController, onUserSignedOut = {
-                                Log.d(TAG, "=== USER SIGNED OUT ===")
+                                isUserSignedInState = false
+                            })
+                        }
+                        composable(Profile.route) {
+                            ProfileScreen(navController, onUserSignedOut = {
                                 isUserSignedInState = false
                             })
                         }
                         composable(
-                            DishDetails.route + "/{${DishDetails.dishId}}",
+                            route = DishDetails.route + "/{${DishDetails.dishId}}",
                             arguments = listOf(navArgument(DishDetails.dishId) { type = NavType.IntType })
                         ) {
                             val id = requireNotNull(it.arguments?.getInt(DishDetails.dishId)) { "Dish id is null" }
-                            DishDetailsScreen(id)
+                            DishDetailsScreen(id = id, navController = navController)
                         }
                     }
                 } else {
-                    Log.d(TAG, "=== SHOWING LOGIN SCREEN ===")
                     LoginScreen(onUserSignedIn = {
-                        Log.d(TAG, "=== USER SIGNED IN CALLBACK RECEIVED ===")
                         isUserSignedInState = true
                     })
                 }

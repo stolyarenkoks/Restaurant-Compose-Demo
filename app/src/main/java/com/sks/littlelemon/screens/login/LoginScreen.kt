@@ -89,14 +89,9 @@ fun LoginView(
         )
         Button(
             onClick = {
-                Log.d(TAG, "=== LOGIN BUTTON CLICKED ===")
-                Log.d(TAG, "Username: $username")
-                Log.d(TAG, "Password: $password")
-                if (username == "" && password == "1") {
-                    Log.d(TAG, "=== CREDENTIALS VALID, TRYING TO SIGN IN ===")
+                if (validateCredentials(username, password)) {
                     onUserSignedIn()
                 } else {
-                    Log.d(TAG, "=== INVALID CREDENTIALS ===")
                     Toast.makeText(context, invalidCredentialsMessage, Toast.LENGTH_LONG).show()
                 }
             },
@@ -119,7 +114,7 @@ private fun validateCredentials(
     username: String,
     password: String
 ): Boolean {
-    return username == "Konstantin" && password == "1234"
+    return username == "" && password == "1"
 }
 
 // MARK: - Preview

@@ -1,13 +1,12 @@
 package com.sks.littlelemon.screens.home
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.sks.littlelemon.repository.DishRepository
-import com.sks.littlelemon.screens.topBar.TopAppBar
+import com.sks.littlelemon.screens.navigation.TopBar
 
 @Composable
 fun HomeScreen(navController: NavHostController, onUserSignedOut: () -> Unit) {
@@ -19,7 +18,7 @@ private fun HomeView(navController: NavHostController, onUserSignedOut: () -> Un
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        TopAppBar()
+        TopBar()
         HomeHeaderView()
         HomeDishesView(
             navController = navController,
