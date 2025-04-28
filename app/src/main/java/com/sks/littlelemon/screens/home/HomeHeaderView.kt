@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -23,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sks.littlelemon.R
+import com.sks.littlelemon.ui.theme.LittleLemonColor
 
 // MARK: - View
 
@@ -31,14 +31,14 @@ fun HomeHeaderView() {
     val context = LocalContext.current
     Column(
         modifier = Modifier
-            .background(Color(0xFF495E57))
+            .background(LittleLemonColor.green)
             .padding(start = 12.dp, end = 12.dp, top = 16.dp, bottom = 16.dp)
     ) {
         Text(
             text = stringResource(id = R.string.title),
             fontSize = 40.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFFF4CE14)
+            color = LittleLemonColor.yellow
         )
 
         Row(
@@ -52,14 +52,14 @@ fun HomeHeaderView() {
                 Text(
                     text = stringResource(id = R.string.location),
                     fontSize = 24.sp,
-                    color = Color(0xFFEDEFEE),
+                    color = LittleLemonColor.cloud,
                     modifier = Modifier
                         .padding(bottom = 8.dp)
                 )
 
                 Text(
                     text = stringResource(id = R.string.description),
-                    color = Color(0xFFEDEFEE),
+                    color = LittleLemonColor.cloud,
                     fontSize = 18.sp,
                     modifier = Modifier
                         .padding(bottom = 16.dp)
@@ -83,14 +83,20 @@ fun HomeHeaderView() {
                     .show()
             },
             shape = RoundedCornerShape(20.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF4CE14))
+            colors = ButtonDefaults.buttonColors(containerColor = LittleLemonColor.yellow)
         ) {
             Text(
                 text = stringResource(id = R.string.order_button_text),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF333333)
+                color = LittleLemonColor.green
             )
         }
     }
+}
+
+@Preview(name = "HomeHeaderView")
+@Composable
+private fun HomeHeaderViewPreview() {
+    HomeHeaderView()
 }

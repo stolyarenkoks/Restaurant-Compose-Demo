@@ -17,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -25,6 +24,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sks.littlelemon.R
+import com.sks.littlelemon.ui.theme.LittleLemonColor
 
 private const val TAG = "LITTLE_LEMON_LOGIN"
 
@@ -95,13 +95,13 @@ fun LoginView(
                 }
             },
             colors = ButtonDefaults.buttonColors(
-                Color(0xFF495E57)
+                LittleLemonColor.green
             ),
             modifier = Modifier.padding(10.dp)
         ) {
             Text(
                 text = stringResource(R.string.login),
-                color = Color(0xFFEDEFEE)
+                color = LittleLemonColor.cloud
             )
         }
     }

@@ -1,6 +1,6 @@
 package com.sks.littlelemon.screens.main
 
-import BottomBar
+import com.sks.littlelemon.screens.navigation.BottomBar
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -11,7 +11,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -88,7 +87,7 @@ fun MainView(isUserSignedIn: Boolean = false) {
                             HomeScreen(navController)
                         }
                         composable(Profile.route) {
-                            ProfileScreen(navController, onUserSignedOut = {
+                            ProfileScreen(onUserSignedOut = {
                                 isUserSignedInState = false
                                 navController.navigate(Home.route) {
                                     popUpTo(0) { inclusive = true }

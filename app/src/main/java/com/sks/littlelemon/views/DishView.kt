@@ -1,6 +1,5 @@
 package com.sks.littlelemon.views
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,18 +27,13 @@ import com.sks.littlelemon.destinations.DishDetails
 import com.sks.littlelemon.models.Dish
 import com.sks.littlelemon.repository.DishRepository
 
-private const val TAG = "LITTLE_LEMON_MENU_DISH_CELL"
-
 @Composable
 fun DishView(dish: Dish, navController: NavHostController) {
-    Log.d(TAG, "Rendering MenuDishCell for dish ID: ${dish.id}")
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
         onClick = {
-            Log.d(TAG, "Dish clicked with ID: ${dish.id}")
             navController.navigate("${DishDetails.route}/${dish.id}")
         }
     ) {
@@ -67,7 +61,9 @@ fun DishView(dish: Dish, navController: NavHostController) {
                 )
                 Text(
                     text = "$${dish.price}",
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontWeight = FontWeight.Bold
+                    ),
                     modifier = Modifier.padding(top = 4.dp)
                 )
             }

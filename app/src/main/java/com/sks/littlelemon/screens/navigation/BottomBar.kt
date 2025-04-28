@@ -1,27 +1,25 @@
+package com.sks.littlelemon.screens.navigation
+
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.sks.littlelemon.destinations.Destinations
 import com.sks.littlelemon.destinations.Home
 import com.sks.littlelemon.destinations.Profile
+import com.sks.littlelemon.ui.theme.LittleLemonColor
 
 @Composable
 fun BottomBar(navController: NavController) {
-    val destinations = listOf<Destinations>(Home, Profile)
+    val destinations = listOf(Home, Profile)
     val selectedIndex = rememberSaveable { mutableIntStateOf(0) }
     NavigationBar(
-        containerColor = Color(0xFFFDF7FF),
-        tonalElevation = 0.dp
+        containerColor = LittleLemonColor.lightGray
     ) {
         destinations.forEachIndexed { index, destination ->
             NavigationBarItem(
@@ -38,9 +36,9 @@ fun BottomBar(navController: NavController) {
                         )
                     }
                 },
-                selected = selectedIndex.value == index,
+                selected = selectedIndex.intValue == index,
                 onClick = {
-                    selectedIndex.value = index
+                    selectedIndex.intValue = index
                     navController.navigate(destination.route) {
                         popUpTo("home")
                         launchSingleTop = true

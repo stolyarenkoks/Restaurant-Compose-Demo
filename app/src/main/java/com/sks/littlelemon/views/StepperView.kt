@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sks.littlelemon.ui.theme.LittleLemonColor
 
 @Composable
 fun StepperView(
@@ -33,13 +34,14 @@ fun StepperView(
         ) {
             Text(
                 text = "-",
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.headlineMedium,
+                color = LittleLemonColor.green
             )
         }
 
         Text(
             text = "$count",
-            style = MaterialTheme.typography.headlineMedium,
+            style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(16.dp)
         )
 
@@ -52,7 +54,8 @@ fun StepperView(
         ) {
             Text(
                 text = "+",
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.headlineMedium,
+                color = LittleLemonColor.green
             )
         }
     }
