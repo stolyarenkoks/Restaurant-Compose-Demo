@@ -15,10 +15,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -28,10 +27,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sks.littlelemon.models.Dish
-import com.sks.littlelemon.repository.DishRepository
 import com.sks.littlelemon.screens.navigation.TopBar
 import com.sks.littlelemon.ui.theme.LittleLemonColor
 import com.sks.littlelemon.views.StepperView
@@ -41,23 +40,41 @@ import com.sks.littlelemon.views.StepperView
 @Composable
 fun DishDetailsScreen(
     id: Int,
-    navController: NavController
+    navController: NavController,
+    viewModel: DishDetailsViewModel = viewModel()
 ) {
-    val dish = DishRepository.getDish(id)
+    val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
 
-    if (dish != null) {
-        Scaffold(
-            topBar = { 
-                TopBar(
-                    showBackButton = true,
-                    onBackClick = { navController.navigateUp() }
-                )
-            }
-        ) { paddingValues ->
+    LaunchedEffect(id) {
+        viewModel.loadDish(id)
+    }
+
+    Scaffold(
+        topBar = { 
+            TopBar(
+                showBackButton = true,
+                onBackClick = { navController.navigateUp() }
+            )
+        }
+    ) { paddingValues ->
+        uiState.dish?.let { dish ->
             DishDetailsView(
                 dish = dish,
-                navController = navController,
-                modifier = Modifier.padding(paddingValues)
+                quantity = uiState.quantity,
+                onQuantityChange = viewModel::updateQuantity,
+                onAddToCart = {
+                    viewModel.addToCart()
+                    Toast.makeText(
+                        context,
+                        "Order added to cart!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    navController.navigateUp()
+                },
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
             )
         }
     }
@@ -68,12 +85,11 @@ fun DishDetailsScreen(
 @Composable
 private fun DishDetailsView(
     dish: Dish,
-    navController: NavController,
+    quantity: Int,
+    onQuantityChange: (Int) -> Unit,
+    onAddToCart: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var count by remember { mutableIntStateOf(1) }
-    val context = LocalContext.current
-
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -109,30 +125,19 @@ private fun DishDetailsView(
             StepperView(
                 minStepValue = 1,
                 maxStepValue = 10,
-                count = count,
-                onAdd = {
-                    count++
-                },
-                onRemove = {
-                    count--
-                }
+                count = quantity,
+                onAdd = { onQuantityChange(quantity + 1) },
+                onRemove = { onQuantityChange(quantity - 1) }
             )
 
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = {
-                    Toast.makeText(
-                        context,
-                        "Order added to cart!",
-                        Toast.LENGTH_SHORT)
-                        .show()
-                    navController.navigateUp()
-                },
+                onClick = onAddToCart,
                 shape = RoundedCornerShape(4.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = LittleLemonColor.yellow)
             ) {
                 Text(
-                    text = "Add for $${dish.price * count}",
+                    text = "Add for $${dish.price * quantity}",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = LittleLemonColor.green
@@ -146,9 +151,11 @@ private fun DishDetailsView(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-private fun LoginViewPreview() {
-    DishDetailsView(
-        dish = DishRepository.getDish(id = 1)!!,
-        navController = rememberNavController()
+private fun DishDetailsViewPreview() {
+    val viewModel: DishDetailsViewModel = viewModel()
+    DishDetailsScreen(
+        id = 1,
+        navController = rememberNavController(),
+        viewModel = viewModel
     )
 }
