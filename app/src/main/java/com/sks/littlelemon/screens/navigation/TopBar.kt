@@ -23,7 +23,9 @@ import com.sks.littlelemon.ui.theme.LittleLemonColor
 @Composable
 fun TopBar(
     showBackButton: Boolean = false,
-    onBackClick: () -> Unit = {}
+    showCartIcon: Boolean = false,
+    onBackClick: () -> Unit = {},
+    onCartClick: () -> Unit = {}
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -56,12 +58,16 @@ fun TopBar(
                 .padding(horizontal = 20.dp)
         )
         
-        IconButton(onClick = {}) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_cart),
-                contentDescription = "Cart",
-                modifier = Modifier.size(24.dp)
-            )
+        if (showCartIcon) {
+            IconButton(onClick = onCartClick) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_cart),
+                    contentDescription = "Cart",
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        } else {
+            IconButton(onClick = {}) {}
         }
     }
 }
@@ -76,4 +82,10 @@ private fun TopBarPreview() {
 @Composable
 private fun TopBarWithBackButtonPreview() {
     TopBar(showBackButton = true)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun TopBarWithCartPreview() {
+    TopBar(showCartIcon = true)
 }

@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.sks.littlelemon.R
+import com.sks.littlelemon.destinations.DishDetails
 import com.sks.littlelemon.models.Dish
 import com.sks.littlelemon.views.DishView
 
@@ -29,7 +30,12 @@ fun HomeDishesView(navController: NavHostController, dishes: List<Dish> = listOf
         LazyColumn {
             itemsIndexed(dishes) { index, dish ->
                 Log.d(TAG, "Rendering dish at index $index: ${dish.id}")
-                DishView(dish = dish, navController = navController)
+                DishView(
+                    dish = dish,
+                    onClick = {
+                        navController.navigate("${DishDetails.route}/${dish.id}")
+                    }
+                )
             }
         }
     }

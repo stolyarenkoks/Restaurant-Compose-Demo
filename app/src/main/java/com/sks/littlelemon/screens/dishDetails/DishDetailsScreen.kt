@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.sks.littlelemon.destinations.Cart
 import com.sks.littlelemon.models.Dish
 import com.sks.littlelemon.screens.navigation.TopBar
 import com.sks.littlelemon.ui.theme.LittleLemonColor
@@ -54,6 +55,7 @@ fun DishDetailsScreen(
         topBar = { 
             TopBar(
                 showBackButton = true,
+                showCartIcon = false,
                 onBackClick = { navController.navigateUp() }
             )
         }

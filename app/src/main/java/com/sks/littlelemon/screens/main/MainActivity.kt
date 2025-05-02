@@ -26,6 +26,7 @@ import androidx.navigation.navArgument
 import com.sks.littlelemon.destinations.DishDetails
 import com.sks.littlelemon.destinations.Home
 import com.sks.littlelemon.destinations.Profile
+import com.sks.littlelemon.screens.cart.CartScreen
 import com.sks.littlelemon.screens.dishDetails.DishDetailsScreen
 import com.sks.littlelemon.screens.home.HomeScreen
 import com.sks.littlelemon.screens.login.LoginScreen
@@ -53,7 +54,9 @@ private fun shouldShowBottomBar(
     isUserSignedIn: Boolean,
     currentRoute: String?
 ): Boolean {
-    val shouldShow = isUserSignedIn && currentRoute?.startsWith(DishDetails.route) != true
+    val shouldShow = isUserSignedIn && 
+        currentRoute?.startsWith(DishDetails.route) != true && 
+        currentRoute != "cart"
     Log.d("MainActivity", "Current route: $currentRoute, Should show bottom bar: $shouldShow")
     return shouldShow
 }
@@ -100,6 +103,9 @@ fun MainView(isUserSignedIn: Boolean = false) {
                         ) {
                             val id = requireNotNull(it.arguments?.getInt(DishDetails.dishId)) { "Dish id is null" }
                             DishDetailsScreen(id = id, navController = navController)
+                        }
+                        composable("cart") {
+                            CartScreen(navController = navController)
                         }
                     }
                 } else {

@@ -21,21 +21,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.sks.littlelemon.destinations.DishDetails
 import com.sks.littlelemon.models.Dish
 import com.sks.littlelemon.repository.DishRepository
 
 @Composable
-fun DishView(dish: Dish, navController: NavHostController) {
+fun DishView(
+    dish: Dish,
+    onClick: () -> Unit = {}
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
-        onClick = {
-            navController.navigate("${DishDetails.route}/${dish.id}")
-        }
+        onClick = onClick
     ) {
         Row(
             modifier = Modifier
@@ -86,6 +84,6 @@ fun DishView(dish: Dish, navController: NavHostController) {
 fun DishViewPreview() {
     DishView(
         dish = DishRepository.getDish(id = 1)!!,
-        navController = rememberNavController()
+        onClick = {}
     )
 }

@@ -2,20 +2,21 @@ package com.sks.littlelemon.screens.dishDetails
 
 import androidx.lifecycle.ViewModel
 import com.sks.littlelemon.models.Dish
+import com.sks.littlelemon.repository.CartRepository
 import com.sks.littlelemon.repository.DishRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-data class DishDetailsUIState(
+data class DishDetailsUiState(
     val dish: Dish? = null,
     val quantity: Int = 1
 )
 
 class DishDetailsViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow(DishDetailsUIState())
-    val uiState: StateFlow<DishDetailsUIState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(DishDetailsUiState())
+    val uiState: StateFlow<DishDetailsUiState> = _uiState.asStateFlow()
 
     fun loadDish(dishId: Int) {
         val dish = DishRepository.getDish(dishId)
@@ -26,5 +27,9 @@ class DishDetailsViewModel : ViewModel() {
         _uiState.update { it.copy(quantity = newQuantity) }
     }
 
-    fun addToCart() {}
+    fun addToCart() {
+        _uiState.value.dish?.let { dish ->
+            CartRepository.addToCart(dish, _uiState.value.quantity)
+        }
+    }
 } 
