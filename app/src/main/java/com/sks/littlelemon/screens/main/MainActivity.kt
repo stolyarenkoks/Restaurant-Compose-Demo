@@ -1,6 +1,6 @@
 package com.sks.littlelemon.screens.main
 
-import com.sks.littlelemon.screens.navigation.BottomBar
+import com.sks.littlelemon.views.BottomBar
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -26,11 +26,11 @@ import androidx.navigation.navArgument
 import com.sks.littlelemon.destinations.DishDetails
 import com.sks.littlelemon.destinations.Home
 import com.sks.littlelemon.destinations.Profile
-import com.sks.littlelemon.screens.cart.CartScreen
-import com.sks.littlelemon.screens.dishDetails.DishDetailsScreen
-import com.sks.littlelemon.screens.home.HomeScreen
-import com.sks.littlelemon.screens.login.LoginScreen
-import com.sks.littlelemon.screens.profile.ProfileScreen
+import com.sks.littlelemon.screens.cart.CartView
+import com.sks.littlelemon.screens.dishDetails.DishDetailsView
+import com.sks.littlelemon.screens.home.HomeView
+import com.sks.littlelemon.screens.login.LoginView
+import com.sks.littlelemon.screens.profile.ProfileView
 import com.sks.littlelemon.ui.theme.LittleLemonTheme
 
 // MARK: - Activity
@@ -47,29 +47,15 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-// MARK: - Private Functions
+// MARK: - Private View Components
 
 @Composable
-private fun shouldShowBottomBar(
-    isUserSignedIn: Boolean,
-    currentRoute: String?
-): Boolean {
-    val shouldShow = isUserSignedIn && 
-        currentRoute?.startsWith(DishDetails.route) != true && 
-        currentRoute != "cart"
-    Log.d("MainActivity", "Current route: $currentRoute, Should show bottom bar: $shouldShow")
-    return shouldShow
-}
-
-// MARK: - View
-
-@Composable
-fun MainView(isUserSignedIn: Boolean = false) {
+private fun MainView(isUserSignedIn: Boolean = false) {
     var isUserSignedInState by rememberSaveable { mutableStateOf(isUserSignedIn) }
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    
+
     Scaffold(
         modifier = Modifier,
         bottomBar = {
@@ -87,10 +73,10 @@ fun MainView(isUserSignedIn: Boolean = false) {
                 if (isUserSignedInState) {
                     NavHost(navController = navController, startDestination = Home.route) {
                         composable(Home.route) {
-                            HomeScreen(navController)
+                            HomeView(navController)
                         }
                         composable(Profile.route) {
-                            ProfileScreen(onUserSignedOut = {
+                            ProfileView(onUserSignedOut = {
                                 isUserSignedInState = false
                                 navController.navigate(Home.route) {
                                     popUpTo(0) { inclusive = true }
@@ -102,14 +88,14 @@ fun MainView(isUserSignedIn: Boolean = false) {
                             arguments = listOf(navArgument(DishDetails.dishId) { type = NavType.IntType })
                         ) {
                             val id = requireNotNull(it.arguments?.getInt(DishDetails.dishId)) { "Dish id is null" }
-                            DishDetailsScreen(id = id, navController = navController)
+                            DishDetailsView(id = id, navController = navController)
                         }
                         composable("cart") {
-                            CartScreen(navController = navController)
+                            CartView(navController = navController)
                         }
                     }
                 } else {
-                    LoginScreen(onUserSignedIn = {
+                    LoginView(onUserSignedIn = {
                         isUserSignedInState = true
                     })
                 }
@@ -118,15 +104,29 @@ fun MainView(isUserSignedIn: Boolean = false) {
     )
 }
 
+// MARK: - Private Functions
+
+@Composable
+private fun shouldShowBottomBar(
+    isUserSignedIn: Boolean,
+    currentRoute: String?
+): Boolean {
+    val shouldShow = isUserSignedIn && 
+        currentRoute?.startsWith(DishDetails.route) != true && 
+        currentRoute != "cart"
+    Log.d("MainActivity", "Current route: $currentRoute, Should show bottom bar: $shouldShow")
+    return shouldShow
+}
+
 // MARK: - Preview
 
-@Preview(name = "MainView - User Not Signed In", showBackground = true, showSystemUi = true)
+@Preview(name = "User Not Signed In", showBackground = true, showSystemUi = true)
 @Composable
 private fun MainPreviewUserNotSignedIn() {
     MainView(isUserSignedIn = false)
 }
 
-@Preview(name = "MainView - User Signed In", showBackground = true, showSystemUi = true)
+@Preview(name = "User Signed In", showBackground = true, showSystemUi = true)
 @Composable
 private fun MainPreviewUserSignedIn() {
     MainView(isUserSignedIn = true)

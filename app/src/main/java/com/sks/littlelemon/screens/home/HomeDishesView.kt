@@ -1,6 +1,5 @@
 package com.sks.littlelemon.screens.home
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,27 +12,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.sks.littlelemon.R
-import com.sks.littlelemon.destinations.DishDetails
 import com.sks.littlelemon.models.Dish
+import com.sks.littlelemon.models.mock
 import com.sks.littlelemon.views.DishView
 
-private const val TAG = "LITTLE_LEMON_LOWER"
+// MARK: - View
 
 @Composable
-fun HomeDishesView(navController: NavHostController, dishes: List<Dish> = listOf()) {
-    Log.d(TAG, "Rendering LowerPanel with ${dishes.size} dishes")
+fun HomeDishesView(
+    dishes: List<Dish> = listOf(),
+    onDishSelected: (Int) -> Unit = {},
+) {
     Column {
         WeeklySpecialCard()
         LazyColumn {
-            itemsIndexed(dishes) { index, dish ->
-                Log.d(TAG, "Rendering dish at index $index: ${dish.id}")
+            itemsIndexed(dishes) { _, dish ->
                 DishView(
                     dish = dish,
-                    onClick = {
-                        navController.navigate("${DishDetails.route}/${dish.id}")
+                    onClick =  {
+                        onDishSelected(dish.id)
                     }
                 )
             }
@@ -41,9 +42,10 @@ fun HomeDishesView(navController: NavHostController, dishes: List<Dish> = listOf
     }
 }
 
+// MARK: - Private View Components
+
 @Composable
 private fun WeeklySpecialCard() {
-    Log.d(TAG, "Rendering WeeklySpecialCard")
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,4 +60,12 @@ private fun WeeklySpecialCard() {
                 .padding(16.dp)
         )
     }
+}
+
+// MARK: - Preview
+
+@Preview()
+@Composable
+private fun HomeDishesPreview() {
+    HomeDishesView(dishes = listOf(Dish.mock()))
 }

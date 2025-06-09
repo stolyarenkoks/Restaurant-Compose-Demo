@@ -1,6 +1,5 @@
 package com.sks.littlelemon.screens.login
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -23,15 +22,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sks.littlelemon.R
 import com.sks.littlelemon.ui.theme.LittleLemonColor
-
-private const val TAG = "LITTLE_LEMON_LOGIN"
 
 // MARK: - View
 
 @Composable
-fun LoginScreen(onUserSignedIn: () -> Unit) {
+fun LoginView(
+    onUserSignedIn: () -> Unit,
+    viewModel: LoginViewModel = viewModel()
+) {
     var username by remember {
         mutableStateOf("")
     }
@@ -45,21 +46,22 @@ fun LoginScreen(onUserSignedIn: () -> Unit) {
         onUsernameChanged = { username = it },
         onPasswordChanged = { password = it },
         onUserSignedIn = {
-            Log.d(TAG, "=== LOGIN SCREEN: Calling onUserSignedIn callback ===")
             onUserSignedIn()
-        }
+        },
+        viewModel = viewModel
     )
 }
 
 // MARK: - Private View Components
 
 @Composable
-fun LoginView(
+private fun LoginView(
     username: String = "",
     password: String = "",
     onUsernameChanged: (String) -> Unit = {},
     onPasswordChanged: (String) -> Unit = {},
-    onUserSignedIn: () -> Unit = {}
+    onUserSignedIn: () -> Unit = {},
+    viewModel: LoginViewModel
 ) {
     val context = LocalContext.current
     val invalidCredentialsMessage = stringResource(R.string.invalid_credentials)
@@ -73,12 +75,14 @@ fun LoginView(
             contentDescription = "Logo Image",
             modifier = Modifier.padding(10.dp)
         )
+
         TextField(
             value = username,
             onValueChange = onUsernameChanged,
             label = { Text(text = stringResource(R.string.username)) },
             modifier = Modifier.padding(10.dp)
         )
+
         TextField(
             value = password,
             onValueChange = onPasswordChanged,
@@ -86,9 +90,10 @@ fun LoginView(
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.padding(10.dp),
         )
+
         Button(
             onClick = {
-                if (validateCredentials(username, password)) {
+                if (viewModel.validateCredentials(username, password)) {
                     onUserSignedIn()
                 } else {
                     Toast.makeText(context, invalidCredentialsMessage, Toast.LENGTH_LONG).show()
@@ -104,22 +109,18 @@ fun LoginView(
                 color = LittleLemonColor.cloud
             )
         }
+
+        Text("Hint: Use Any Username and '1234' for Password",
+            color = LittleLemonColor.green
+        )
     }
-}
-
-// MARK: - Private Methods
-
-private fun validateCredentials(
-    username: String,
-    password: String
-): Boolean {
-    return username == "" && password == "1"
 }
 
 // MARK: - Preview
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-private fun LoginViewPreview() {
-    LoginView()
+private fun LoginPreview() {
+    val viewModel: LoginViewModel = viewModel()
+    LoginView(viewModel = viewModel)
 }

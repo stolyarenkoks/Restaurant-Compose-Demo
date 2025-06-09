@@ -9,14 +9,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-data class DishDetailsUiState(
+data class DishDetailsUIState(
     val dish: Dish? = null,
     val quantity: Int = 1
 )
 
 class DishDetailsViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow(DishDetailsUiState())
-    val uiState: StateFlow<DishDetailsUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(DishDetailsUIState())
+    val uiState: StateFlow<DishDetailsUIState> = _uiState.asStateFlow()
 
     fun loadDish(dishId: Int) {
         val dish = DishRepository.getDish(dishId)

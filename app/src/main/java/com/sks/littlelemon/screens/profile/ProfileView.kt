@@ -16,11 +16,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.sks.littlelemon.screens.navigation.TopBar
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sks.littlelemon.screens.login.LoginViewModel
+import com.sks.littlelemon.views.TopBar
 import com.sks.littlelemon.ui.theme.LittleLemonColor
 
+// MARK: - View
+
 @Composable
-fun ProfileScreen(
+fun ProfileView(
+    viewModel: LoginViewModel = viewModel(),
     onUserSignedOut: () -> Unit
 ) {
     Scaffold(
@@ -56,10 +61,12 @@ fun ProfileScreen(
     }
 }
 
-@Preview(showBackground = true)
+// MARK: - Preview
+
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun ProfileScreenPreview() {
-    ProfileScreen(
+fun ProfilePreview() {
+    ProfileView(
         onUserSignedOut = {}
     )
 } 

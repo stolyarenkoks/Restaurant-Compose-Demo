@@ -1,4 +1,4 @@
-package com.sks.littlelemon.screens.navigation
+package com.sks.littlelemon.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,6 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sks.littlelemon.R
 import com.sks.littlelemon.ui.theme.LittleLemonColor
+
+// MARK: - View
 
 @Composable
 fun TopBar(
@@ -72,19 +74,21 @@ fun TopBar(
     }
 }
 
-@Preview(showBackground = true)
+// MARK: - Preview
+
+@Preview()
 @Composable
 private fun TopBarPreview() {
     TopBar()
 }
 
-@Preview(showBackground = true)
+@Preview()
 @Composable
 private fun TopBarWithBackButtonPreview() {
     TopBar(showBackButton = true)
 }
 
-@Preview(showBackground = true)
+@Preview()
 @Composable
 private fun TopBarWithCartPreview() {
     TopBar(showCartIcon = true)

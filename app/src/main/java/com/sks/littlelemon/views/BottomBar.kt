@@ -1,4 +1,4 @@
-package com.sks.littlelemon.screens.navigation
+package com.sks.littlelemon.views
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -13,6 +13,8 @@ import androidx.navigation.compose.rememberNavController
 import com.sks.littlelemon.destinations.Home
 import com.sks.littlelemon.destinations.Profile
 import com.sks.littlelemon.ui.theme.LittleLemonColor
+
+// MARK: - View
 
 @Composable
 fun BottomBar(navController: NavController) {
@@ -49,7 +51,9 @@ fun BottomBar(navController: NavController) {
     }
 }
 
-@Preview(showBackground = true)
+// MARK: - Preview
+
+@Preview()
 @Composable
 fun BottomBarPreview() {
     BottomBar(navController = rememberNavController())

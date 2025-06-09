@@ -8,8 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 class CartViewModel: ViewModel() {
     val cartItems: StateFlow<List<CartItem>> = CartRepository.cartItems
-    val totalPrice: Double
-        get() = CartRepository.totalPrice
+    val totalPrice: Double get() = CartRepository.totalPrice
 
     fun addToCart(dish: Dish, quantity: Int) {
         CartRepository.addToCart(dish, quantity)
@@ -26,4 +25,4 @@ class CartViewModel: ViewModel() {
     fun clearCart() {
         CartRepository.clearCart()
     }
-} 
+}

@@ -30,16 +30,15 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.sks.littlelemon.destinations.Cart
 import com.sks.littlelemon.models.Dish
-import com.sks.littlelemon.screens.navigation.TopBar
+import com.sks.littlelemon.views.TopBar
 import com.sks.littlelemon.ui.theme.LittleLemonColor
 import com.sks.littlelemon.views.StepperView
 
 // MARK: - View
 
 @Composable
-fun DishDetailsScreen(
+fun DishDetailsView(
     id: Int,
     navController: NavController,
     viewModel: DishDetailsViewModel = viewModel()
@@ -153,9 +152,9 @@ private fun DishDetailsView(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-private fun DishDetailsViewPreview() {
+private fun DishDetailsPreview() {
     val viewModel: DishDetailsViewModel = viewModel()
-    DishDetailsScreen(
+    DishDetailsView(
         id = 1,
         navController = rememberNavController(),
         viewModel = viewModel

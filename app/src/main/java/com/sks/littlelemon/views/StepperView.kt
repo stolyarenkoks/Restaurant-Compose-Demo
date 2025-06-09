@@ -13,6 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sks.littlelemon.ui.theme.LittleLemonColor
 
+// MARK: - View
+
 @Composable
 fun StepperView(
     minStepValue: Int = 0,
@@ -61,8 +63,10 @@ fun StepperView(
     }
 }
 
-@Preview(name = "StepperView")
+// MARK: - Preview
+
+@Preview()
 @Composable
-fun MainPreviewUserSignedIn() {
+fun StepperPreview() {
     StepperView()
 }

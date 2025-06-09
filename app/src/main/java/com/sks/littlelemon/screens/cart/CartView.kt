@@ -31,13 +31,15 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sks.littlelemon.models.CartItem
 import com.sks.littlelemon.repository.DishRepository
-import com.sks.littlelemon.screens.navigation.TopBar
+import com.sks.littlelemon.views.TopBar
 import com.sks.littlelemon.ui.theme.LittleLemonColor
 import com.sks.littlelemon.views.DishView
 import com.sks.littlelemon.views.StepperView
 
+// MARK: - View
+
 @Composable
-fun CartScreen(
+fun CartView(
     navController: NavController,
     viewModel: CartViewModel = viewModel()
 ) {
@@ -71,6 +73,8 @@ fun CartScreen(
         }
     }
 }
+
+// MARK: - Private View Components
 
 @Composable
 private fun EmptyCartView() {
@@ -109,7 +113,12 @@ private fun CartView(
                 CartItemCard(
                     cartItem = item,
                     onRemove = { onRemoveItem(item.dish.id) },
-                    onQuantityChange = { newQuantity -> onUpdateQuantity(item.dish.id, newQuantity) }
+                    onQuantityChange = { newQuantity ->
+                        onUpdateQuantity(
+                            item.dish.id,
+                            newQuantity
+                        )
+                    }
                 )
             }
         }
@@ -126,8 +135,7 @@ private fun CartView(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Total:",
-                    style = MaterialTheme.typography.titleLarge
+                    text = "Total:", style = MaterialTheme.typography.titleLarge
                 )
                 Text(
                     text = "$${String.format("%.2f", totalPrice)}",
@@ -142,8 +150,7 @@ private fun CartView(
                 colors = ButtonDefaults.buttonColors(containerColor = LittleLemonColor.yellow)
             ) {
                 Text(
-                    text = "Clear Cart",
-                    color = LittleLemonColor.green
+                    text = "Clear Cart", color = LittleLemonColor.green
                 )
             }
         }
@@ -165,50 +172,47 @@ private fun CartItemCard(
             DishView(dish = cartItem.dish)
 
             Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                StepperView(
+                    minStepValue = 1,
+                    maxStepValue = 10,
+                    count = cartItem.quantity,
+                    onAdd = { onQuantityChange(cartItem.quantity + 1) },
+                    onRemove = { onQuantityChange(cartItem.quantity - 1) }
+                )
 
-                    StepperView(
-                        minStepValue = 1,
-                        maxStepValue = 10,
-                        count = cartItem.quantity,
-                        onAdd = { onQuantityChange(cartItem.quantity + 1) },
-                        onRemove = { onQuantityChange(cartItem.quantity - 1) }
+                IconButton(onClick = onRemove) {
+                    Icon(
+                        imageVector = Icons.Default.Delete, contentDescription = "Remove item"
                     )
-
-                    IconButton(onClick = onRemove) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "Remove item"
-                        )
-                    }
                 }
             }
+        }
     }
 }
 
 // MARK: - Preview
 
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+private fun CartPreview() {
+    val viewModel: CartViewModel = viewModel()
+    viewModel.addToCart(DishRepository.dishes[0], 2)
+    viewModel.addToCart(DishRepository.dishes[2], 1)
+
+    CartView(
+        navController = rememberNavController(), viewModel = viewModel
+    )
+}
+
 @Preview(name = "Empty Cart", showBackground = true, showSystemUi = true)
 @Composable
 private fun EmptyCartPreview() {
     val viewModel: CartViewModel = viewModel()
-    CartScreen(
-        navController = rememberNavController(),
-        viewModel = viewModel
-    )
-}
+    viewModel.clearCart()
 
-@Preview(name = "Cart with Items", showBackground = true, showSystemUi = true)
-@Composable
-private fun CartWithItemsPreview() {
-    val viewModel: CartViewModel = viewModel()
-    viewModel.addToCart(DishRepository.dishes[0], 2)
-    viewModel.addToCart(DishRepository.dishes[2], 1)
-    
-    CartScreen(
-        navController = rememberNavController(),
-        viewModel = viewModel
+    CartView(
+        navController = rememberNavController(), viewModel = viewModel
     )
 }

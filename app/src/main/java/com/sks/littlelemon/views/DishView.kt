@@ -24,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import com.sks.littlelemon.models.Dish
 import com.sks.littlelemon.repository.DishRepository
 
+// MARK: - View
+
 @Composable
 fun DishView(
     dish: Dish,
@@ -79,7 +81,9 @@ fun DishView(
     }
 }
 
-@Preview(name = "DishView")
+// MARK: - Preview
+
+@Preview()
 @Composable
 fun DishViewPreview() {
     DishView(
