@@ -1,9 +1,11 @@
 package com.sks.littlelemon.screens.login
 
 import android.widget.Toast
+import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -25,6 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sks.littlelemon.R
 import com.sks.littlelemon.ui.theme.LittleLemonColor
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.ui.draw.alpha
 
 // MARK: - View
 
@@ -65,11 +69,15 @@ private fun LoginView(
 ) {
     val context = LocalContext.current
     val invalidCredentialsMessage = stringResource(R.string.invalid_credentials)
-    
+
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        modifier = Modifier
+            .fillMaxHeight()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.weight(1.0f))
+
         Image(
             painter = painterResource(id = R.drawable.logo_vertical),
             contentDescription = "Logo Image",
@@ -110,10 +118,25 @@ private fun LoginView(
             )
         }
 
-        Text("Hint: Use Any Username and '1234' for Password",
-            color = LittleLemonColor.green
-        )
+        Spacer(modifier = Modifier.weight(1.0f))
+
+        HintText(showHint = viewModel.showHint)
     }
+}
+
+@Composable
+private fun HintText(showHint: Boolean) {
+    val alpha by animateFloatAsState(
+        targetValue = if (showHint) 1f else 0f
+    )
+
+    Text(
+        text = "Hint: Use Any Username and '1234' as Password",
+        color = LittleLemonColor.green,
+        modifier = Modifier
+            .padding(bottom = 0.dp)
+            .alpha(alpha)
+    )
 }
 
 // MARK: - Preview

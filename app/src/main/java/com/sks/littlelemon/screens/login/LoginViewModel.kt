@@ -1,14 +1,20 @@
 package com.sks.littlelemon.screens.login
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
 class LoginViewModel: ViewModel() {
+
+    var showHint by mutableStateOf(false)
 
     fun validateCredentials(
         username: String,
         password: String
     ): Boolean {
-        // Any username Allowed
-        return password == "1234"
+        val isValid = password == "1234"
+        showHint = !isValid
+        return isValid
     }
 }
