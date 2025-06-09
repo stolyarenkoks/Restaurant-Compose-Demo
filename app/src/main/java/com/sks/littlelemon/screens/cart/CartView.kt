@@ -1,5 +1,6 @@
 package com.sks.littlelemon.screens.cart
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -92,6 +93,7 @@ private fun EmptyCartView() {
     }
 }
 
+@SuppressLint("DefaultLocale")
 @Composable
 private fun CartView(
     cartItems: List<CartItem>,

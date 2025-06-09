@@ -3,7 +3,6 @@ package com.sks.littlelemon.destinations
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
 
 abstract class Destinations {
@@ -26,11 +25,10 @@ object Profile: Destinations() {
 
 object DishDetails: Destinations() {
     override val route = "DishDetails"
-    const val dishId = "dish_id"
+    const val DISH_ID = "dish_id"
 }
 
 object Cart: Destinations() {
     override val route = "cart"
-    override val icon = Icons.Filled.ShoppingCart
     override val title = "Cart"
 }

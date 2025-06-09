@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            LittleLemonTheme() {
+            LittleLemonTheme {
                 MainView()
             }
         }
@@ -99,10 +99,10 @@ private fun MainView(isUserSignedIn: Boolean = false) {
                             })
                         }
                         composable(
-                            route = DishDetails.route + "/{${DishDetails.dishId}}",
-                            arguments = listOf(navArgument(DishDetails.dishId) { type = NavType.IntType })
+                            route = DishDetails.route + "/{${DishDetails.DISH_ID}}",
+                            arguments = listOf(navArgument(DishDetails.DISH_ID) { type = NavType.IntType })
                         ) {
-                            val id = requireNotNull(it.arguments?.getInt(DishDetails.dishId)) { "Dish id is null" }
+                            val id = requireNotNull(it.arguments?.getInt(DishDetails.DISH_ID)) { "Dish id is null" }
                             DishDetailsView(id = id, navController = navController)
                         }
                         composable("cart") {

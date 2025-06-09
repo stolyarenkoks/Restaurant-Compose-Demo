@@ -65,8 +65,8 @@ fun StepperView(
 
 // MARK: - Preview
 
-@Preview()
+@Preview
 @Composable
-fun StepperPreview() {
+private fun StepperPreview() {
     StepperView()
 }

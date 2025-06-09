@@ -83,9 +83,9 @@ fun DishView(
 
 // MARK: - Preview
 
-@Preview()
+@Preview
 @Composable
-fun DishViewPreview() {
+private fun DishViewPreview() {
     DishView(
         dish = DishRepository.getDish(id = 1)!!,
         onClick = {}

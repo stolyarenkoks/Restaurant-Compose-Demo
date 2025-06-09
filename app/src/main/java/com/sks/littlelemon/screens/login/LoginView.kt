@@ -1,7 +1,6 @@
 package com.sks.littlelemon.screens.login
 
 import android.widget.Toast
-import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

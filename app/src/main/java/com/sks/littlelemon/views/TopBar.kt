@@ -76,19 +76,19 @@ fun TopBar(
 
 // MARK: - Preview
 
-@Preview()
+@Preview
 @Composable
 private fun TopBarPreview() {
     TopBar()
 }
 
-@Preview()
+@Preview
 @Composable
 private fun TopBarWithBackButtonPreview() {
     TopBar(showBackButton = true)
 }
 
-@Preview()
+@Preview
 @Composable
 private fun TopBarWithCartPreview() {
     TopBar(showCartIcon = true)

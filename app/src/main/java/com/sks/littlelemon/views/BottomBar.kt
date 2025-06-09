@@ -53,8 +53,8 @@ fun BottomBar(navController: NavController) {
 
 // MARK: - Preview
 
-@Preview()
+@Preview
 @Composable
-fun BottomBarPreview() {
+private fun BottomBarPreview() {
     BottomBar(navController = rememberNavController())
 }

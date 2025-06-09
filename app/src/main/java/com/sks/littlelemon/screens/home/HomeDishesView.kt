@@ -14,7 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
 import com.sks.littlelemon.R
 import com.sks.littlelemon.models.Dish
 import com.sks.littlelemon.models.mock
@@ -64,7 +63,7 @@ private fun WeeklySpecialCard() {
 
 // MARK: - Preview
 
-@Preview()
+@Preview
 @Composable
 private fun HomeDishesPreview() {
     HomeDishesView(dishes = listOf(Dish.mock()))

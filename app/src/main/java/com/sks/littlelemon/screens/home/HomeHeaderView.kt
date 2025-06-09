@@ -97,7 +97,7 @@ fun HomeHeaderView() {
 
 // MARK: - Preview
 
-@Preview()
+@Preview
 @Composable
 private fun HomeHeaderPreview() {
     HomeHeaderView()
