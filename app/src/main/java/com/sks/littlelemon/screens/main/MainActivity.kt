@@ -63,6 +63,7 @@ class MainActivity: ComponentActivity() {
 @Composable
 private fun MainView(isUserSignedIn: Boolean = false) {
     var isUserSignedInState by rememberSaveable { mutableStateOf(isUserSignedIn) }
+    var username by rememberSaveable { mutableStateOf("") }
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -87,12 +88,16 @@ private fun MainView(isUserSignedIn: Boolean = false) {
                             HomeView(navController)
                         }
                         composable(Profile.route) {
-                            ProfileView(onUserSignedOut = {
-                                isUserSignedInState = false
-                                navController.navigate(Home.route) {
-                                    popUpTo(0) { inclusive = true }
+                            ProfileView(
+                                username = username,
+                                onUserSignedOut = {
+                                    isUserSignedInState = false
+                                    username = ""
+                                    navController.navigate(Home.route) {
+                                        popUpTo(0) { inclusive = true }
+                                    }
                                 }
-                            })
+                            )
                         }
                         composable(
                             route = DishDetails.route + "/{${DishDetails.DISH_ID}}",
@@ -106,9 +111,12 @@ private fun MainView(isUserSignedIn: Boolean = false) {
                         }
                     }
                 } else {
-                    LoginView(onUserSignedIn = {
-                        isUserSignedInState = true
-                    })
+                    LoginView(
+                        onUserSignedIn = { enteredUsername ->
+                            username = enteredUsername
+                            isUserSignedInState = true
+                        }
+                    )
                 }
             }
         }

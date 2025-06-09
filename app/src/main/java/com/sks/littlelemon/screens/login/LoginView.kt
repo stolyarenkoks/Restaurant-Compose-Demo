@@ -33,7 +33,7 @@ import androidx.compose.ui.draw.alpha
 
 @Composable
 fun LoginView(
-    onUserSignedIn: () -> Unit,
+    onUserSignedIn: (String) -> Unit,
     viewModel: LoginViewModel = viewModel()
 ) {
     var username by remember {
@@ -49,7 +49,7 @@ fun LoginView(
         onUsernameChanged = { username = it },
         onPasswordChanged = { password = it },
         onUserSignedIn = {
-            onUserSignedIn()
+            onUserSignedIn(username)
         },
         viewModel = viewModel
     )

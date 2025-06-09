@@ -13,7 +13,7 @@ class LoginViewModel: ViewModel() {
         username: String,
         password: String
     ): Boolean {
-        val isValid = password == "1234"
+        val isValid = password == "1234" && !username.isEmpty()
         showHint = !isValid
         return isValid
     }
