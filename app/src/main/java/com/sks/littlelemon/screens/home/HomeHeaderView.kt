@@ -69,7 +69,7 @@ fun HomeHeaderView() {
 
             Image(
                 painter = painterResource(id = R.drawable.upperpanelimage),
-                contentDescription = "Upper Panel Image",
+                contentDescription = stringResource(R.string.upper_panel_image),
                 modifier = Modifier.clip(RoundedCornerShape(20.dp))
             )
         }
@@ -78,7 +78,7 @@ fun HomeHeaderView() {
             onClick = {
                 Toast.makeText(
                     context,
-                    "Order received. Thank you!",
+                    context.getString(R.string.order_received),
                     Toast.LENGTH_LONG)
                     .show()
             },

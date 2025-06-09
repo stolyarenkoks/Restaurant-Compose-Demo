@@ -14,9 +14,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sks.littlelemon.R
 import com.sks.littlelemon.views.TopBar
 import com.sks.littlelemon.ui.theme.LittleLemonColor
 
@@ -39,7 +41,7 @@ fun ProfileView(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Profile",
+                text = stringResource(R.string.profile),
                 style = MaterialTheme.typography.headlineMedium
             )
             
@@ -52,7 +54,7 @@ fun ProfileView(
                 ),
             ) {
                 Text(
-                    text ="Sign Out",
+                    text = stringResource(R.string.sign_out),
                     color = LittleLemonColor.cloud
                 )
             }

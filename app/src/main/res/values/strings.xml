@@ -1,37 +1,59 @@
 <resources>
+    <!-- App-wide -->
     <string name="app_name">Little Lemon</string>
+
+    <!-- Home Screen -->
     <string name="title">Little Lemon</string>
     <string name="location">Chicago</string>
     <string name="description">We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</string>
     <string name="order_button_text">Order Take Away</string>
     <string name="weekly_special">Weekly Special</string>
-    <string name="add_for">Add for</string>
-    <string name="logout">Logout</string>
-    <string name="menu">Menu</string>
-    <string name="dish_not_found">Dish not found</string>
-    
+    <string name="upper_panel_image">Upper Panel Image</string>
+    <string name="order_received">Order received. Thank you!</string>
+
     <!-- Login Screen -->
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="invalid_credentials">Invalid credentials. Please try again.</string>
-    
-    <!-- Dishes -->
+    <string name="hint_password">Hint: Use Any Username and 1234 as Password</string>
+
+    <!-- Cart Screen -->
+    <string name="cart_empty">Your cart is empty</string>
+    <string name="total">Total:</string>
+    <string name="clear_cart">Clear Cart</string>
+    <string name="remove_item">Remove item</string>
+    <string name="order_added_to_cart">Order added to cart!</string>
+    <string name="cart">Cart</string>
+
+    <!-- Profile Screen -->
+    <string name="profile">Profile</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="logout">Logout</string>
+
+    <!-- Dish Details Screen -->
+    <string name="add_for">Add for</string>
+    <string name="dish_id_null">Dish id is null</string>
+    <string name="dish_details">DishDetails</string>
+    <string name="dish_not_found">Dish not found</string>
+
+    <!-- Common UI / Navigation -->
+    <string name="back">Back</string>
+    <string name="menu_icon">Menu Icon</string>
+    <string name="little_lemon_logo">Little Lemon Logo</string>
+    <string name="menu">Menu</string>
+
+    <!-- Dishes (Data) -->
     <string name="greek_salad">Greek Salad</string>
     <string name="greek_salad_description">The famous greek salad of crispy lettuce, peppers, olives, our Chicago.</string>
-    
     <string name="lemon_dessert">Lemon Dessert</string>
     <string name="lemon_dessert_description">Traditional homemade Italian Lemon Ricotta Cake.</string>
-    
     <string name="bruschetta">Bruschetta</string>
     <string name="bruschetta_description">Our Bruschetta is made from grilled bread that has been smeared with garlic and seasoned with salt and olive oil.</string>
-    
     <string name="grilled_fish">Grilled Fish</string>
     <string name="grilled_fish_description">Fish marinated in fresh orange and lemon juice. Grilled with orange and lemon wedges.</string>
-    
     <string name="pasta">Pasta</string>
     <string name="pasta_description">Penne with fried aubergines, cherry tomatoes, tomato sauce, fresh chilli, garlic, basil &amp; salted ricotta cheese.</string>
-    
     <string name="lasagne">Lasagne</string>
     <string name="lasagne_description">Oven-baked layers of pasta stuffed with Bolognese sauce, béchamel sauce, ham, Parmesan &amp; mozzarella cheese.</string>
 </resources>

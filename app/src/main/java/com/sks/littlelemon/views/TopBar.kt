@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sks.littlelemon.R
@@ -39,7 +40,7 @@ fun TopBar(
             IconButton(onClick = onBackClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = stringResource(R.string.back),
                     modifier = Modifier.size(24.dp)
                 )
             }
@@ -47,7 +48,7 @@ fun TopBar(
             IconButton(onClick = {}) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_hamburger_menu),
-                    contentDescription = "Menu Icon",
+                    contentDescription = stringResource(R.string.menu_icon),
                     modifier = Modifier.size(24.dp)
                 )
             }
@@ -55,7 +56,7 @@ fun TopBar(
         
         Image(
             painter = painterResource(id = R.drawable.logo_horizontal),
-            contentDescription = "Little Lemon Logo",
+            contentDescription = stringResource(R.string.little_lemon_logo),
             modifier = Modifier.fillMaxWidth(0.5F)
                 .padding(horizontal = 20.dp)
         )
@@ -64,7 +65,7 @@ fun TopBar(
             IconButton(onClick = onCartClick) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_cart),
-                    contentDescription = "Cart",
+                    contentDescription = stringResource(R.string.cart),
                     modifier = Modifier.size(24.dp)
                 )
             }

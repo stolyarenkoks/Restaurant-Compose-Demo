@@ -130,7 +130,7 @@ private fun HintText(showHint: Boolean) {
     )
 
     Text(
-        text = "Hint: Use Any Username and '1234' as Password",
+        text = stringResource(R.string.hint_password),
         color = LittleLemonColor.green,
         modifier = Modifier
             .padding(bottom = 0.dp)

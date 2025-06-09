@@ -24,12 +24,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.sks.littlelemon.R
 import com.sks.littlelemon.models.CartItem
 import com.sks.littlelemon.repository.DishRepository
 import com.sks.littlelemon.views.TopBar
@@ -87,7 +89,7 @@ private fun EmptyCartView() {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Your cart is empty",
+            text = stringResource(R.string.cart_empty),
             style = MaterialTheme.typography.headlineMedium
         )
     }
@@ -137,7 +139,7 @@ private fun CartView(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Total:", style = MaterialTheme.typography.titleLarge
+                    text = stringResource(R.string.total), style = MaterialTheme.typography.titleLarge
                 )
                 Text(
                     text = "$${String.format("%.2f", totalPrice)}",
@@ -152,7 +154,7 @@ private fun CartView(
                 colors = ButtonDefaults.buttonColors(containerColor = LittleLemonColor.yellow)
             ) {
                 Text(
-                    text = "Clear Cart", color = LittleLemonColor.green
+                    text = stringResource(R.string.clear_cart), color = LittleLemonColor.green
                 )
             }
         }
@@ -186,7 +188,7 @@ private fun CartItemCard(
 
                 IconButton(onClick = onRemove) {
                     Icon(
-                        imageVector = Icons.Default.Delete, contentDescription = "Remove item"
+                        imageVector = Icons.Default.Delete, contentDescription = stringResource(R.string.remove_item)
                     )
                 }
             }

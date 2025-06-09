@@ -34,6 +34,7 @@ import com.sks.littlelemon.models.Dish
 import com.sks.littlelemon.views.TopBar
 import com.sks.littlelemon.ui.theme.LittleLemonColor
 import com.sks.littlelemon.views.StepperView
+import com.sks.littlelemon.R
 
 // MARK: - View
 
@@ -68,7 +69,7 @@ fun DishDetailsView(
                     viewModel.addToCart()
                     Toast.makeText(
                         context,
-                        "Order added to cart!",
+                        context.getString(R.string.order_added_to_cart),
                         Toast.LENGTH_SHORT
                     ).show()
                     navController.navigateUp()
@@ -138,7 +139,7 @@ private fun DishDetailsView(
                 colors = ButtonDefaults.buttonColors(containerColor = LittleLemonColor.yellow)
             ) {
                 Text(
-                    text = "Add for $${dish.price * quantity}",
+                    text = stringResource(R.string.add_for) + " $${dish.price * quantity}",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = LittleLemonColor.green
