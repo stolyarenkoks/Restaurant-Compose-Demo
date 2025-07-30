@@ -1,5 +1,5 @@
 # LittleLemon Restaurant Kotlin with Compose Demo
-An example of a Android App with several screens, navigation, custom UI components, and so on. 
+An example of a Android App with several screens, navigation, custom UI components, database and so on. 
 Developed entirely natively using Kotlin and Jetpack Compose.
 
 ![Demo](demo.gif)
@@ -13,9 +13,12 @@ No additional setup is needed. Build project using Android Studio.
 ## Technologies
 * Kotlin
 * Jetpack Compose
+* LiveData
+* Ktor
+* Room
 
 ## Versions
-* Android Studio Meerkat 2024.3.2
+* Android Studio Narwhal 2025.1.1
 * Kotlin 2.0.0
 
 ## Branches
