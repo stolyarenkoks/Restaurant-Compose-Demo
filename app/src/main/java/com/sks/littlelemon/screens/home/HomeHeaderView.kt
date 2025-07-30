@@ -27,7 +27,9 @@ import com.sks.littlelemon.ui.theme.LittleLemonColor
 // MARK: - View
 
 @Composable
-fun HomeHeaderView() {
+fun HomeHeaderView(
+    onMenuTapped: () -> Unit = {},
+) {
     val context = LocalContext.current
     Column(
         modifier = Modifier
@@ -76,11 +78,7 @@ fun HomeHeaderView() {
 
         Button(
             onClick = {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.order_received),
-                    Toast.LENGTH_LONG)
-                    .show()
+                onMenuTapped()
             },
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(containerColor = LittleLemonColor.yellow)

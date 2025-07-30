@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sks.littlelemon.destinations.Cart
 import com.sks.littlelemon.destinations.DishDetails
+import com.sks.littlelemon.destinations.Menu
 import com.sks.littlelemon.models.Dish
 import com.sks.littlelemon.views.TopBar
 
@@ -43,7 +44,9 @@ private fun HomeView(
             onCartClick = { navController.navigate(Cart.route) }
         )
 
-        HomeHeaderView()
+        HomeHeaderView(onMenuTapped = {
+            navController.navigate(Menu.route)
+        })
 
         HomeDishesView(
             dishes = dishes,

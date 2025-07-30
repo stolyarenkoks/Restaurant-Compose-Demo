@@ -32,3 +32,8 @@ object Cart: Destinations() {
     override val route = "cart"
     override val title = "Cart"
 }
+
+object Menu: Destinations() {
+    override val route = "menu"
+    override val title = "Menu"
+}
