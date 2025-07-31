@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 import com.sks.littlelemon.database.MenuItemRoom
 
 @Serializable
-data class MenuItemNetwork(
+data class MenuItem(
     @SerialName("id")
     val id: Int,
     @SerialName("title")

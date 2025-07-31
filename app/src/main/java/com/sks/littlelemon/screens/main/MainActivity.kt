@@ -25,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.sks.littlelemon.destinations.Cart
 import com.sks.littlelemon.destinations.DishDetails
 import com.sks.littlelemon.destinations.Home
 import com.sks.littlelemon.destinations.Menu
@@ -138,9 +139,10 @@ private fun shouldShowBottomBar(
     isUserSignedIn: Boolean,
     currentRoute: String?
 ): Boolean {
-    val shouldShow = isUserSignedIn && 
-        currentRoute?.startsWith(DishDetails.route) != true && 
-        currentRoute != "cart"
+    val shouldShow = isUserSignedIn &&
+            currentRoute?.startsWith(DishDetails.route) != true &&
+            currentRoute?.startsWith(Cart.route) != true &&
+            currentRoute?.startsWith(Menu.route) != true
     Log.d("MainActivity", "Current route: $currentRoute, Should show bottom bar: $shouldShow")
     return shouldShow
 }
