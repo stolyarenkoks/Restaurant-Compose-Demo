@@ -68,18 +68,20 @@ fun MenuView(
             modifier = Modifier
                 .padding(paddingValues)
                 .padding(16.dp)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(id = R.drawable.logo_horizontal),
-                contentDescription = "logo",
-                modifier = Modifier.padding(50.dp)
+                painter = painterResource(id = R.drawable.menu),
+                contentDescription = "menu",
+                modifier = Modifier.padding(top = 32.dp, bottom = 32.dp)
             )
 
             Button(
                 onClick = { orderMenuItems = !orderMenuItems },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 50.dp, end = 50.dp)
+                    .padding(horizontal = 32.dp)
             ) {
                 Text(if (orderMenuItems) "Original Order" else "Order By Name")
             }
@@ -90,7 +92,7 @@ fun MenuView(
                 label = { Text("Search") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 50.dp, end = 50.dp)
+                    .padding(horizontal = 32.dp)
             )
 
             MenuItemsList(items = filteredMenuItems)
@@ -134,7 +136,6 @@ private fun MenuItemsList(items: List<MenuItemRoom>) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun MenuPreview() {
-    // Используем обычный ViewModel - Repository вернет mock данные для Preview
     val viewModel: MenuViewModel = viewModel()
     MenuView(
         navController = rememberNavController(),
