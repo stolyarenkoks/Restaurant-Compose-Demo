@@ -27,19 +27,24 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.sks.littlelemon.destinations.DishDetails
 import com.sks.littlelemon.destinations.Home
+import com.sks.littlelemon.destinations.Menu
 import com.sks.littlelemon.destinations.Profile
 import com.sks.littlelemon.screens.cart.CartView
 import com.sks.littlelemon.screens.dishDetails.DishDetailsView
 import com.sks.littlelemon.screens.home.HomeView
 import com.sks.littlelemon.screens.login.LoginView
+import com.sks.littlelemon.screens.menu.MenuView
 import com.sks.littlelemon.screens.profile.ProfileView
 import com.sks.littlelemon.ui.theme.LittleLemonTheme
+import com.sks.littlelemon.repository.MenuRepository
 
 // MARK: - Activity
 
 class MainActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        MenuRepository.initDatabase(this)
 
         window.decorView.post {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -108,6 +113,9 @@ private fun MainView(isUserSignedIn: Boolean = false) {
                         }
                         composable("cart") {
                             CartView(navController = navController)
+                        }
+                        composable("menu") {
+                            MenuView(navController = navController)
                         }
                     }
                 } else {
