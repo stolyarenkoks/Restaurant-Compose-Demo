@@ -8,7 +8,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDownward
+import androidx.compose.material.icons.filled.SortByAlpha
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -77,23 +82,34 @@ fun MenuView(
                 modifier = Modifier.padding(top = 32.dp, bottom = 32.dp)
             )
 
-            Button(
-                onClick = { orderMenuItems = !orderMenuItems },
+            Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 32.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(if (orderMenuItems) "Original Order" else "Order By Name")
+                OutlinedTextField(
+                    value = searchPhrase,
+                    onValueChange = { searchPhrase = it },
+                    label = { Text("Search") },
+                    modifier = Modifier.weight(1f)
+                )
+                
+                IconButton(
+                    onClick = { orderMenuItems = !orderMenuItems }
+                ) {
+                    Icon(
+                        imageVector = if (orderMenuItems)
+                            Icons.Default.ArrowDownward
+                        else
+                            Icons.Default.SortByAlpha,
+                        contentDescription = "Sort alphabetically",
+                        tint = if (orderMenuItems) 
+                            MaterialTheme.colorScheme.primary 
+                        else 
+                            MaterialTheme.colorScheme.onSurface
+                    )
+                }
             }
-
-            OutlinedTextField(
-                value = searchPhrase,
-                onValueChange = { searchPhrase = it },
-                label = { Text("Search") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 32.dp)
-            )
 
             MenuItemsList(items = filteredMenuItems)
         }
