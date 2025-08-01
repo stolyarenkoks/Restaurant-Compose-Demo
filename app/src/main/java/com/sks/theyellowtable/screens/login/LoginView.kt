@@ -75,12 +75,12 @@ private fun LoginView(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.weight(1.0f))
+        Spacer(modifier = Modifier.weight(0.5f))
 
         Image(
-            painter = painterResource(id = R.drawable.logo_vertical),
+            painter = painterResource(id = R.drawable.logo),
             contentDescription = "Logo Image",
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(40.dp)
         )
 
         TextField(

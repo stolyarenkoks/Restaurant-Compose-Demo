@@ -45,20 +45,14 @@ fun TopBar(
                 )
             }
         } else {
-            IconButton(onClick = {}) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_hamburger_menu),
-                    contentDescription = stringResource(R.string.menu_icon),
-                    modifier = Modifier.size(24.dp)
-                )
-            }
+            IconButton(onClick = {}) {}
         }
         
         Image(
-            painter = painterResource(id = R.drawable.logo_horizontal),
+            painter = painterResource(id = R.drawable.logo),
             contentDescription = stringResource(R.string.the_yellow_table_logo),
             modifier = Modifier.fillMaxWidth(0.5F)
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = 56.dp)
         )
         
         if (showCartIcon) {
