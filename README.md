@@ -1,4 +1,4 @@
-# LittleLemon Restaurant Kotlin with Compose Demo
+# TheYellowTable Restaurant Kotlin with Compose Demo
 An example of a Android App with several screens, navigation, custom UI components, database and so on. 
 Developed entirely natively using Kotlin and Jetpack Compose.
 

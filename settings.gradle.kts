@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Little Lemon"
+rootProject.name = "The Yellow Table"
 include(":app")

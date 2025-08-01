@@ -1,11 +1,11 @@
 <resources>
     <!-- App-wide -->
-    <string name="app_name">Little Lemon</string>
+    <string name="app_name">The Yellow Table</string>
 
     <!-- Home Screen -->
-    <string name="title">Little Lemon</string>
-    <string name="location">Chicago</string>
-    <string name="description">We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</string>
+    <string name="title">The Yellow Table</string>
+    <string name="location">Munich</string>
+    <string name="description">A Michelin-rated Italian kitchen where golden flavors, zesty lemon notes, and heartfelt hospitality come together at The Yellow Table.</string>
     <string name="order_button_text">Gourmet Menu</string>
     <string name="weekly_special">Weekly Special</string>
     <string name="upper_panel_image">Upper Panel Image</string>
@@ -40,7 +40,7 @@
     <!-- Common UI / Navigation -->
     <string name="back">Back</string>
     <string name="menu_icon">Menu Icon</string>
-    <string name="little_lemon_logo">Little Lemon Logo</string>
+    <string name="the_yellow_table_logo">The Yellow Table Logo</string>
     <string name="menu">Menu</string>
 
     <!-- Dishes (Data) -->

@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.sks.littlelemon"
+    namespace = "com.sks.theyellowtable"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.sks.littlelemon"
+        applicationId = "com.sks.theyellowtable"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
