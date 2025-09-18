@@ -1,28 +1,40 @@
 package com.sks.theyellowtable.screens.cart
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sks.theyellowtable.models.CartItem
 import com.sks.theyellowtable.models.Dish
 import com.sks.theyellowtable.repository.CartRepository
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
-class CartViewModel: ViewModel() {
-    val cartItems: StateFlow<List<CartItem>> = CartRepository.cartItems
-    val totalPrice: Double get() = CartRepository.totalPrice
+class CartViewModel(
+    val cartRepository: CartRepository
+): ViewModel() {
+    val cartItems: StateFlow<List<CartItem>> = cartRepository.cartItems
+    val totalPrice: Double get() = cartRepository.totalPrice
 
     fun addToCart(dish: Dish, quantity: Int) {
-        CartRepository.addToCart(dish, quantity)
+        viewModelScope.launch {
+            cartRepository.addToCart(dish, quantity)
+        }
     }
 
     fun removeItem(dishId: Int) {
-        CartRepository.removeFromCart(dishId)
+        viewModelScope.launch {
+            cartRepository.removeFromCart(dishId)
+        }
     }
 
     fun updateQuantity(dishId: Int, newQuantity: Int) {
-        CartRepository.updateQuantity(dishId, newQuantity)
+        viewModelScope.launch {
+            cartRepository.updateQuantity(dishId, newQuantity)
+        }
     }
 
     fun clearCart() {
-        CartRepository.clearCart()
+        viewModelScope.launch {
+            cartRepository.clearCart()
+        }
     }
 }

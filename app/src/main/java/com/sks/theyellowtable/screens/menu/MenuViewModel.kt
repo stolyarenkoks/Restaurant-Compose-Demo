@@ -4,14 +4,17 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sks.theyellowtable.database.MenuItemRoom
+import com.sks.theyellowtable.database.model.MenuItemEntity
+import com.sks.theyellowtable.network.RemoteMenuRepository
 import com.sks.theyellowtable.repository.MenuRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MenuViewModel : ViewModel() {
+class MenuViewModel(
+    private val remoteMenuRepository: RemoteMenuRepository
+) : ViewModel() {
     
-    val menuItems: LiveData<List<MenuItemRoom>> = MenuRepository.getAllMenuItems()
+    val menuItems: LiveData<List<MenuItemEntity>> = MenuRepository.getAllMenuItems()
     
     init {
         loadMenuData()
@@ -21,7 +24,7 @@ class MenuViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 if (MenuRepository.isDatabaseEmpty()) {
-                    val apiMenuItems = MenuRepository.fetchMenuFromApi()
+                    val apiMenuItems = remoteMenuRepository.fetchMenuFromApi()
                     MenuRepository.saveMenuToDatabase(apiMenuItems)
                 } else {
                     Log.d("MenuViewModel", "Database already has data, skipping API fetch")

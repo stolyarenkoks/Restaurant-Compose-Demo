@@ -1,8 +1,9 @@
 package com.sks.theyellowtable.models
 
+import com.sks.theyellowtable.database.model.MenuItemEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import com.sks.theyellowtable.database.MenuItemRoom
+
 
 @Serializable
 data class MenuItem(
@@ -13,7 +14,7 @@ data class MenuItem(
     @SerialName("price")
     val price: String
 ) {
-    fun toMenuItemRoom() = MenuItemRoom(
+    fun toMenuItemRoom() = MenuItemEntity(
         id,
         title,
         price.toDouble()

@@ -19,7 +19,7 @@ import com.sks.theyellowtable.views.TopBar
 @Composable
 fun HomeView(
     navController: NavHostController,
-    viewModel: HomeViewModel = viewModel()
+    viewModel: HomeViewModel = viewModel(fac) // google it.
 ) {
     HomeView(
         navController = navController,

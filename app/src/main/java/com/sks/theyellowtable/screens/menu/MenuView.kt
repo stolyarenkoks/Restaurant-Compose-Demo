@@ -33,7 +33,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sks.theyellowtable.R
-import com.sks.theyellowtable.database.MenuItemRoom
+import com.sks.theyellowtable.database.model.MenuItemEntity
 import com.sks.theyellowtable.views.TopBar
 
 // MARK: - View
@@ -117,7 +117,7 @@ fun MenuView(
 }
 
 @Composable
-private fun MenuItemsList(items: List<MenuItemRoom>) {
+private fun MenuItemsList(items: List<MenuItemEntity>) {
     LazyColumn(
         modifier = Modifier
             .fillMaxHeight()
