@@ -38,6 +38,7 @@ import com.sks.theyellowtable.screens.menu.MenuView
 import com.sks.theyellowtable.screens.profile.ProfileView
 import com.sks.theyellowtable.ui.theme.TheYellowTableTheme
 import com.sks.theyellowtable.repository.MenuRepository
+import com.sks.theyellowtable.repository.MenuRepositoryImpl
 
 // MARK: - Activity
 
@@ -45,7 +46,12 @@ class MainActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        MenuRepository.initDatabase(this)
+        // Check how to make it properly now with protocol
+        val menuRepository: MenuRepository = MenuRepositoryImpl()
+        menuRepository.initDatabase(this)
+
+        // Old way when it has no protocols
+//        MenuRepository.initDatabase(this)
 
         window.decorView.post {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

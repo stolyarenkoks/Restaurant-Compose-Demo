@@ -11,10 +11,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MenuViewModel(
-    private val remoteMenuRepository: RemoteMenuRepository
+    private val remoteMenuRepository: RemoteMenuRepository,
+    private val localMenuRepository: MenuRepository
 ) : ViewModel() {
     
-    val menuItems: LiveData<List<MenuItemEntity>> = MenuRepository.getAllMenuItems()
+    val menuItems: LiveData<List<MenuItemEntity>> = localMenuRepository.getAllMenuItems()
     
     init {
         loadMenuData()
@@ -23,9 +24,9 @@ class MenuViewModel(
     private fun loadMenuData() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                if (MenuRepository.isDatabaseEmpty()) {
-                    val apiMenuItems = remoteMenuRepository.fetchMenuFromApi()
-                    MenuRepository.saveMenuToDatabase(apiMenuItems)
+                if (localMenuRepository.isDatabaseEmpty()) {
+                    val apiMenuItems = remoteMenuRepository.fetchMenu()
+                    localMenuRepository.saveMenuToDatabase(apiMenuItems)
                 } else {
                     Log.d("MenuViewModel", "Database already has data, skipping API fetch")
                 }

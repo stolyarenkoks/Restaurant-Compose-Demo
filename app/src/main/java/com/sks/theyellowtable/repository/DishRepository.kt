@@ -1,10 +1,18 @@
 package com.sks.theyellowtable.repository
 
 import com.sks.theyellowtable.R
+import com.sks.theyellowtable.models.CartItem
 import com.sks.theyellowtable.models.Dish
+import kotlinx.coroutines.flow.StateFlow
 
-object DishRepository {
-    val dishes = listOf(
+interface DishRepository {
+    val dishes: List<Dish>
+
+    suspend fun getDish(id: Int): Dish?
+}
+
+class DishRepositoryImpl: DishRepository {
+    override val dishes = listOf(
         Dish(
             id = 1,
             nameResourceId = R.string.greek_salad,
@@ -49,5 +57,7 @@ object DishRepository {
         )
     )
 
-    fun getDish(id: Int) = dishes.firstOrNull { it.id == id }
+    override suspend fun getDish(id: Int): Dish? {
+        return dishes.firstOrNull { it.id == id }
+    }
 }

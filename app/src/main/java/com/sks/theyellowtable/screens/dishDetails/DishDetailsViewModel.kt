@@ -18,14 +18,17 @@ data class DishDetailsUIState(
 )
 
 class DishDetailsViewModel(
-    val cartRepository: CartRepository
+    val cartRepository: CartRepository,
+    val dishRepository: DishRepository
 ): ViewModel() {
     private val _uiState = MutableStateFlow(DishDetailsUIState())
     val uiState: StateFlow<DishDetailsUIState> = _uiState.asStateFlow()
 
     fun loadDish(dishId: Int) {
-        val dish = DishRepository.getDish(dishId)
-        _uiState.update { it.copy(dish = dish) }
+        viewModelScope.launch {
+            val dish = dishRepository.getDish(dishId)
+            _uiState.update { it.copy(dish = dish) }
+        }
     }
 
     fun updateQuantity(newQuantity: Int) {

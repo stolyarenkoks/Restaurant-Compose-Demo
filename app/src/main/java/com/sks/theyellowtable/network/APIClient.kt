@@ -10,7 +10,14 @@ import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-class APIClient {
+interface APIClient {
+    suspend fun get(
+        endpoint: String,
+        parameters: Map<String, String> = emptyMap<String, String>()
+    ): HttpResponse
+}
+
+class APIClientImpl: APIClient {
 
     private val baseURLString = "https://raw.githubusercontent.com/"
 
@@ -25,10 +32,7 @@ class APIClient {
         }
     }
 
-    suspend fun get(
-        endpoint: String,
-        parameters: Map<String, String> = emptyMap<String, String>()
-    ): HttpResponse {
+    override suspend fun get(endpoint: String, parameters: Map<String, String>): HttpResponse {
         return httpClient.get("$baseURLString$endpoint")
     }
 }

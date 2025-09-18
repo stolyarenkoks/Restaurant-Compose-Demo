@@ -6,21 +6,19 @@ import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.sks.theyellowtable.database.AppDatabase
 import com.sks.theyellowtable.database.model.MenuItemEntity
-import com.sks.theyellowtable.models.MenuItem
-import com.sks.theyellowtable.models.Menu
-import io.ktor.client.HttpClient
-import io.ktor.client.call.body
-import io.ktor.client.engine.android.Android
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.request.get
-import io.ktor.http.ContentType
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
+import com.sks.theyellowtable.network.model.MenuItemResponse
 
-object MenuRepository {
+interface MenuRepository {
+    fun initDatabase(context: Context)
+    fun getAllMenuItems(): LiveData<List<MenuItemEntity>>
+    fun saveMenuToDatabase(menuItems: List<MenuItemResponse>)
+    fun isDatabaseEmpty(): Boolean
+}
+
+class MenuRepositoryImpl: MenuRepository {
     private var database: AppDatabase? = null
 
-    fun initDatabase(context: Context) {
+    override fun initDatabase(context: Context) {
         if (database == null) {
             database = Room.databaseBuilder(
                 context.applicationContext, AppDatabase::class.java, "database"
@@ -28,23 +26,23 @@ object MenuRepository {
         }
     }
 
-    fun getAllMenuItems(): LiveData<List<MenuItemEntity>> {
+    override fun getAllMenuItems(): LiveData<List<MenuItemEntity>> {
         if (database == null) {
             return androidx.lifecycle.MutableLiveData(getPreviewMockData())
         }
         return database!!.menuItemDao().getAll()
     }
 
-    fun saveMenuToDatabase(menuItems: List<MenuItem>) {
+    override fun saveMenuToDatabase(menuItems: List<MenuItemResponse>) {
         try {
-            val menuItemsRoom = menuItems.map { it.toMenuItemRoom() }
+            val menuItemsRoom = menuItems.map { it.toMenuItemEntity() }
             database?.menuItemDao()?.insertAll(*menuItemsRoom.toTypedArray())
         } catch (e: Exception) {
             Log.e("MenuRepository", "Error saving to database", e)
         }
     }
 
-    fun isDatabaseEmpty(): Boolean {
+    override fun isDatabaseEmpty(): Boolean {
         return database?.menuItemDao()?.isEmpty() ?: true
     }
 

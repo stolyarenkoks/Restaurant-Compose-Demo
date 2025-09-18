@@ -1,11 +1,10 @@
-package com.sks.theyellowtable.models
+package com.sks.theyellowtable.network.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Menu(
+data class MenuResponse(
     @SerialName("menu")
-    val menu: List<MenuItem>
+    val menu: List<MenuItemResponse>
 )
-

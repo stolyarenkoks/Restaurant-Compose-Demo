@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import com.sks.theyellowtable.models.Dish
 import com.sks.theyellowtable.repository.DishRepository
 
-class HomeViewModel: ViewModel() {
-    val dishes: List<Dish> = DishRepository.dishes
+class HomeViewModel(
+    val dishRepository: DishRepository
+): ViewModel() {
+    val dishes: List<Dish> = dishRepository.dishes
 }

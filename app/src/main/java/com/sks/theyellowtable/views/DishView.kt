@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sks.theyellowtable.models.Dish
 import com.sks.theyellowtable.repository.DishRepository
 
@@ -83,11 +84,14 @@ fun DishView(
 
 // MARK: - Preview
 
-@Preview
-@Composable
-private fun DishViewPreview() {
-    DishView(
-        dish = DishRepository.getDish(id = 1)!!,
-        onClick = {}
-    )
-}
+// Need to fix it.
+
+//@Preview
+//@Composable
+//private fun DishViewPreview() {
+//    val dishRepository: DishRepository = DishRepositoryImpl()
+//    DishView(
+//        dish = dishRepository.getDish(id = 1)!!,
+//        onClick = {}
+//    )
+//}

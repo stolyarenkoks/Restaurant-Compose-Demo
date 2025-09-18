@@ -19,7 +19,7 @@ import com.sks.theyellowtable.views.TopBar
 @Composable
 fun HomeView(
     navController: NavHostController,
-    viewModel: HomeViewModel = viewModel(fac) // google it.
+    viewModel: HomeViewModel = viewModel() // google how to inject here.
 ) {
     HomeView(
         navController = navController,

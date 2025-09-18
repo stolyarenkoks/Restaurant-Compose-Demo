@@ -1,12 +1,11 @@
-package com.sks.theyellowtable.models
+package com.sks.theyellowtable.network.model
 
 import com.sks.theyellowtable.database.model.MenuItemEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-
 @Serializable
-data class MenuItem(
+data class MenuItemResponse(
     @SerialName("id")
     val id: Int,
     @SerialName("title")
@@ -14,7 +13,7 @@ data class MenuItem(
     @SerialName("price")
     val price: String
 ) {
-    fun toMenuItemRoom() = MenuItemEntity(
+    fun toMenuItemEntity() = MenuItemEntity(
         id,
         title,
         price.toDouble()

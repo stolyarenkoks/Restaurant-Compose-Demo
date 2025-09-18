@@ -34,6 +34,7 @@ import androidx.navigation.compose.rememberNavController
 import com.sks.theyellowtable.R
 import com.sks.theyellowtable.models.CartItem
 import com.sks.theyellowtable.repository.DishRepository
+import com.sks.theyellowtable.repository.DishRepositoryImpl
 import com.sks.theyellowtable.views.TopBar
 import com.sks.theyellowtable.ui.theme.TheYellowTableColor
 import com.sks.theyellowtable.views.DishView
@@ -201,9 +202,10 @@ private fun CartItemCard(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun CartPreview() {
+    val dishRepository: DishRepository = DishRepositoryImpl()
     val viewModel: CartViewModel = viewModel()
-    viewModel.addToCart(DishRepository.dishes[0], 2)
-    viewModel.addToCart(DishRepository.dishes[2], 1)
+    viewModel.addToCart(dishRepository.dishes[0], 2)
+    viewModel.addToCart(dishRepository.dishes[2], 1)
 
     CartView(
         navController = rememberNavController(), viewModel = viewModel
