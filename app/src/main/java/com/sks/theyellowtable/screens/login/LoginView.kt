@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import org.koin.androidx.compose.koinViewModel
 import com.sks.theyellowtable.R
 import com.sks.theyellowtable.ui.theme.TheYellowTableColor
 import androidx.compose.animation.core.animateFloatAsState
@@ -34,7 +34,7 @@ import androidx.compose.ui.draw.alpha
 @Composable
 fun LoginView(
     onUserSignedIn: (String) -> Unit,
-    viewModel: LoginViewModel = viewModel()
+    viewModel: LoginViewModel = koinViewModel()
 ) {
     var username by remember {
         mutableStateOf("")

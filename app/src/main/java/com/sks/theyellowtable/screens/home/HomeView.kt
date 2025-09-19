@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.sks.theyellowtable.destinations.Cart
@@ -19,7 +19,7 @@ import com.sks.theyellowtable.views.TopBar
 @Composable
 fun HomeView(
     navController: NavHostController,
-    viewModel: HomeViewModel = viewModel() // google how to inject here.
+    viewModel: HomeViewModel = koinViewModel()
 ) {
     HomeView(
         navController = navController,

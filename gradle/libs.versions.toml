@@ -15,6 +15,7 @@ ktor = "2.3.7"
 kotlinxSerialization = "1.6.2"
 ksp = "2.0.0-1.0.21"
 materialIconsExtended = "1.6.6"
+koin = "3.5.6"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -54,6 +55,10 @@ androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtim
 
 # Material Icons Extended
 androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "materialIconsExtended" }
+
+# Koin
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
