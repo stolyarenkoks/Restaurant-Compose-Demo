@@ -1,5 +1,6 @@
 package com.sks.theyellowtable.screens.home
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -12,6 +13,8 @@ import com.sks.theyellowtable.destinations.Cart
 import com.sks.theyellowtable.destinations.DishDetails
 import com.sks.theyellowtable.destinations.Menu
 import com.sks.theyellowtable.models.Dish
+import com.sks.theyellowtable.repository.DishRepository
+import com.sks.theyellowtable.repository.DishRepositoryImpl
 import com.sks.theyellowtable.views.TopBar
 
 // MARK: - View
@@ -59,12 +62,14 @@ private fun HomeView(
 
 // MARK: - Preview
 
+@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun HomePreview() {
-    val viewModel: HomeViewModel = viewModel()
+    val dishRepository: DishRepository = DishRepositoryImpl()
+    val mockViewModel = HomeViewModel(dishRepository = dishRepository)
     HomeView(
         navController = rememberNavController(),
-        viewModel = viewModel
+        viewModel = mockViewModel
     )
 }

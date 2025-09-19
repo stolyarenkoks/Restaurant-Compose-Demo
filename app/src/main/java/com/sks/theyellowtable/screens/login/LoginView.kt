@@ -1,5 +1,6 @@
 package com.sks.theyellowtable.screens.login
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -140,9 +141,10 @@ private fun HintText(showHint: Boolean) {
 
 // MARK: - Preview
 
+@SuppressLint("ViewModelConstructorInComposable") // Investigate about it
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun LoginPreview() {
-    val viewModel: LoginViewModel = viewModel()
-    LoginView(viewModel = viewModel)
+    val mockViewModel = LoginViewModel()
+    LoginView(viewModel = mockViewModel)
 }

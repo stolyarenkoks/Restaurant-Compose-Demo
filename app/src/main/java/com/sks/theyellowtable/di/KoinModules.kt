@@ -26,7 +26,7 @@ val networkModule = module {
 
 val repositoryModule = module {
     single<DishRepository> { DishRepositoryImpl() }
-    single<CartRepository> { CartRepositoryImpl }
+    single<CartRepository> { CartRepositoryImpl() }
     single<MenuRepository> { 
         MenuRepositoryImpl().apply { 
             initDatabase(androidContext()) 

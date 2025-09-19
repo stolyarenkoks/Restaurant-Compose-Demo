@@ -2,7 +2,6 @@ package com.sks.theyellowtable.repository
 
 import com.sks.theyellowtable.models.CartItem
 import com.sks.theyellowtable.models.Dish
-import com.sks.theyellowtable.repository.CartRepositoryImpl._cartItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +18,7 @@ interface CartRepository {
     suspend fun clearCart()
 }
 
-object CartRepositoryImpl: CartRepository {
+class CartRepositoryImpl: CartRepository {
 
     private val _cartItems = MutableStateFlow<List<CartItem>>(emptyList())
     override val cartItems: StateFlow<List<CartItem>> = _cartItems.asStateFlow()

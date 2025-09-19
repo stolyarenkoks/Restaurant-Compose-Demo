@@ -33,6 +33,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sks.theyellowtable.R
 import com.sks.theyellowtable.models.CartItem
+import com.sks.theyellowtable.repository.CartRepository
+import com.sks.theyellowtable.repository.CartRepositoryImpl
 import com.sks.theyellowtable.repository.DishRepository
 import com.sks.theyellowtable.repository.DishRepositoryImpl
 import com.sks.theyellowtable.views.TopBar
@@ -199,26 +201,30 @@ private fun CartItemCard(
 
 // MARK: - Preview
 
+@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun CartPreview() {
     val dishRepository: DishRepository = DishRepositoryImpl()
-    val viewModel: CartViewModel = viewModel()
-    viewModel.addToCart(dishRepository.dishes[0], 2)
-    viewModel.addToCart(dishRepository.dishes[2], 1)
+    val cartRepository: CartRepository = CartRepositoryImpl()
+    val mockViewModel = CartViewModel(cartRepository = cartRepository)
+    mockViewModel.addToCart(dishRepository.dishes[0], 2)
+    mockViewModel.addToCart(dishRepository.dishes[2], 1)
 
     CartView(
-        navController = rememberNavController(), viewModel = viewModel
+        navController = rememberNavController(), viewModel = mockViewModel
     )
 }
 
+@SuppressLint("ViewModelConstructorInComposable")
 @Preview(name = "Empty Cart", showBackground = true, showSystemUi = true)
 @Composable
 private fun EmptyCartPreview() {
-    val viewModel: CartViewModel = viewModel()
-    viewModel.clearCart()
+    val cartRepository: CartRepository = CartRepositoryImpl()
+    val mockViewModel = CartViewModel(cartRepository = cartRepository)
+    mockViewModel.clearCart()
 
     CartView(
-        navController = rememberNavController(), viewModel = viewModel
+        navController = rememberNavController(), viewModel = mockViewModel
     )
 }

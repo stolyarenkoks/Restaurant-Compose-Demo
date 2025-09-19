@@ -1,5 +1,6 @@
 package com.sks.theyellowtable.screens.dishDetails
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +36,10 @@ import com.sks.theyellowtable.views.TopBar
 import com.sks.theyellowtable.ui.theme.TheYellowTableColor
 import com.sks.theyellowtable.views.StepperView
 import com.sks.theyellowtable.R
+import com.sks.theyellowtable.repository.CartRepository
+import com.sks.theyellowtable.repository.CartRepositoryImpl
+import com.sks.theyellowtable.repository.DishRepository
+import com.sks.theyellowtable.repository.DishRepositoryImpl
 
 // MARK: - View
 
@@ -151,13 +156,19 @@ private fun DishDetailsView(
 
 // MARK: - Preview
 
+@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun DishDetailsPreview() {
-    val viewModel: DishDetailsViewModel = viewModel()
+    val dishRepository: DishRepository = DishRepositoryImpl()
+    val cartRepository: CartRepository = CartRepositoryImpl()
+    val mockViewModel = DishDetailsViewModel(
+        cartRepository = cartRepository,
+        dishRepository = dishRepository
+    )
     DishDetailsView(
         id = 1,
         navController = rememberNavController(),
-        viewModel = viewModel
+        viewModel = mockViewModel
     )
 }

@@ -1,5 +1,6 @@
 package com.sks.theyellowtable.screens.menu
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,14 +35,21 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sks.theyellowtable.R
 import com.sks.theyellowtable.database.model.MenuItemEntity
+import com.sks.theyellowtable.network.APIClient
+import com.sks.theyellowtable.network.APIClientImpl
+import com.sks.theyellowtable.network.RemoteMenuRepository
+import com.sks.theyellowtable.network.RemoteMenuRepositoryImpl
+import com.sks.theyellowtable.repository.MenuRepository
+import com.sks.theyellowtable.repository.MenuRepositoryImpl
 import com.sks.theyellowtable.views.TopBar
+import org.koin.androidx.compose.koinViewModel
 
 // MARK: - View
 
 @Composable
 fun MenuView(
     navController: NavController,
-    viewModel: MenuViewModel = viewModel()
+    viewModel: MenuViewModel = koinViewModel()
 ) {
     Scaffold(
         topBar = {
@@ -149,12 +157,19 @@ private fun MenuItemsList(items: List<MenuItemEntity>) {
 
 // MARK: - Preview
 
+@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun MenuPreview() {
-    val viewModel: MenuViewModel = viewModel()
+    val apiClient = APIClientImpl()
+    val remoteMenuRepository = RemoteMenuRepositoryImpl(apiClient = apiClient)
+    val localMenuRepository = MenuRepositoryImpl()
+    val mockViewModel = MenuViewModel(
+        remoteMenuRepository = remoteMenuRepository,
+        localMenuRepository = localMenuRepository
+    )
     MenuView(
         navController = rememberNavController(),
-        viewModel = viewModel
+        viewModel = mockViewModel
     )
 }
