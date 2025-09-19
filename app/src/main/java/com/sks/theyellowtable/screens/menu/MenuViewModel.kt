@@ -1,6 +1,5 @@
 package com.sks.theyellowtable.screens.menu
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,11 +26,9 @@ class MenuViewModel(
                 if (localMenuRepository.isDatabaseEmpty()) {
                     val apiMenuItems = remoteMenuRepository.fetchMenu()
                     localMenuRepository.saveMenuToDatabase(apiMenuItems)
-                } else {
-                    Log.d("MenuViewModel", "Database already has data, skipping API fetch")
                 }
             } catch (e: Exception) {
-                Log.e("MenuViewModel", "Error in loadMenuData", e)
+                // Error handling without logging
             }
         }
     }
