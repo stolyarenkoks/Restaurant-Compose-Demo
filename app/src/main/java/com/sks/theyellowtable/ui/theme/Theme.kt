@@ -22,9 +22,9 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun TheYellowTableTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = false, // Force light theme always
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false, // Disable dynamic colors - use our custom colors
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
