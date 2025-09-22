@@ -36,6 +36,7 @@ import com.sks.theyellowtable.views.TopBar
 import com.sks.theyellowtable.ui.theme.TheYellowTableColor
 import com.sks.theyellowtable.views.StepperView
 import com.sks.theyellowtable.R
+import com.sks.theyellowtable.models.mock
 import com.sks.theyellowtable.repository.CartRepository
 import com.sks.theyellowtable.repository.CartRepositoryImpl
 import com.sks.theyellowtable.repository.DishRepository
@@ -156,19 +157,13 @@ private fun DishDetailsView(
 
 // MARK: - Preview
 
-@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun DishDetailsPreview() {
-    val dishRepository: DishRepository = DishRepositoryImpl()
-    val cartRepository: CartRepository = CartRepositoryImpl()
-    val mockViewModel = DishDetailsViewModel(
-        cartRepository = cartRepository,
-        dishRepository = dishRepository
-    )
     DishDetailsView(
-        id = 1,
-        navController = rememberNavController(),
-        viewModel = mockViewModel
+        dish = Dish.mock(),
+        quantity = 2,
+        onQuantityChange = {},
+        onAddToCart = {}
     )
 }

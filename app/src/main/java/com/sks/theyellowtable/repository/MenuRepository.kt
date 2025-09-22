@@ -5,45 +5,35 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.sks.theyellowtable.database.AppDatabase
+import com.sks.theyellowtable.database.dao.MenuItemDao
 import com.sks.theyellowtable.database.model.MenuItemEntity
 import com.sks.theyellowtable.network.model.MenuItemResponse
 
 interface MenuRepository {
-    fun initDatabase(context: Context)
     fun getAllMenuItems(): LiveData<List<MenuItemEntity>>
     fun saveMenuToDatabase(menuItems: List<MenuItemResponse>)
     fun isDatabaseEmpty(): Boolean
 }
 
-class MenuRepositoryImpl: MenuRepository {
-    private var database: AppDatabase? = null
-
-    override fun initDatabase(context: Context) {
-        if (database == null) {
-            database = Room.databaseBuilder(
-                context.applicationContext, AppDatabase::class.java, "database"
-            ).allowMainThreadQueries().build()
-        }
-    }
+class MenuRepositoryImpl(
+    private val menuItemDao: MenuItemDao
+): MenuRepository {
 
     override fun getAllMenuItems(): LiveData<List<MenuItemEntity>> {
-        if (database == null) {
-            return androidx.lifecycle.MutableLiveData(getPreviewMockData())
-        }
-        return database!!.menuItemDao().getAll()
+        return menuItemDao.getAll()
     }
 
     override fun saveMenuToDatabase(menuItems: List<MenuItemResponse>) {
         try {
             val menuItemsRoom = menuItems.map { it.toMenuItemEntity() }
-            database?.menuItemDao()?.insertAll(*menuItemsRoom.toTypedArray())
+            menuItemDao.insertAll(*menuItemsRoom.toTypedArray())
         } catch (e: Exception) {
             Log.e("MenuRepository", "Error saving to database", e)
         }
     }
 
     override fun isDatabaseEmpty(): Boolean {
-        return database?.menuItemDao()?.isEmpty() ?: true
+        return menuItemDao.isEmpty()
     }
 
     // MARK: - Private Methods

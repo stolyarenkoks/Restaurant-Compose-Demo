@@ -52,7 +52,10 @@ fun LoginView(
         onUserSignedIn = {
             onUserSignedIn(username)
         },
-        viewModel = viewModel
+        onValidateCredentials = { user, pass ->
+            viewModel.validateCredentials(user, pass)
+        },
+        showHint = viewModel.showHint
     )
 }
 
@@ -65,7 +68,8 @@ private fun LoginView(
     onUsernameChanged: (String) -> Unit = {},
     onPasswordChanged: (String) -> Unit = {},
     onUserSignedIn: () -> Unit = {},
-    viewModel: LoginViewModel
+    onValidateCredentials: (String, String) -> Boolean = { _, _ -> false },
+    showHint: Boolean = false
 ) {
     val context = LocalContext.current
     val invalidCredentialsMessage = stringResource(R.string.invalid_credentials)
@@ -101,7 +105,7 @@ private fun LoginView(
 
         Button(
             onClick = {
-                if (viewModel.validateCredentials(username, password)) {
+                if (onValidateCredentials(username, password)) {
                     onUserSignedIn()
                 } else {
                     Toast.makeText(context, invalidCredentialsMessage, Toast.LENGTH_LONG).show()
@@ -120,7 +124,7 @@ private fun LoginView(
 
         Spacer(modifier = Modifier.weight(1.0f))
 
-        HintText(showHint = viewModel.showHint)
+        HintText(showHint = showHint)
     }
 }
 
@@ -141,10 +145,16 @@ private fun HintText(showHint: Boolean) {
 
 // MARK: - Preview
 
-@SuppressLint("ViewModelConstructorInComposable") // Investigate about it
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun LoginPreview() {
-    val mockViewModel = LoginViewModel()
-    LoginView(viewModel = mockViewModel)
+    LoginView(
+        username = "demo",
+        password = "",
+        onUsernameChanged = {},
+        onPasswordChanged = {},
+        onUserSignedIn = {},
+        onValidateCredentials = { _, _ -> false },
+        showHint = true
+    )
 }

@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import org.koin.androidx.compose.koinViewModel
 import com.sks.theyellowtable.R
 import com.sks.theyellowtable.views.TopBar
 import com.sks.theyellowtable.ui.theme.TheYellowTableColor
@@ -35,7 +35,20 @@ import androidx.compose.ui.text.capitalize
 @Composable
 fun ProfileView(
     username: String,
-    viewModel: ProfileViewModel = viewModel(),
+    viewModel: ProfileViewModel = koinViewModel(),
+    onUserSignedOut: () -> Unit
+) {
+    ProfileView(
+        username = username,
+        onUserSignedOut = onUserSignedOut
+    )
+}
+
+// MARK: - Private View Components
+
+@Composable
+private fun ProfileView(
+    username: String,
     onUserSignedOut: () -> Unit
 ) {
     Scaffold(

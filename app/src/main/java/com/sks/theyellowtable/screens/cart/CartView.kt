@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -41,6 +42,8 @@ import com.sks.theyellowtable.views.TopBar
 import com.sks.theyellowtable.ui.theme.TheYellowTableColor
 import com.sks.theyellowtable.views.DishView
 import com.sks.theyellowtable.views.StepperView
+import com.sks.theyellowtable.models.Dish
+import com.sks.theyellowtable.models.mock
 
 // MARK: - View
 
@@ -49,8 +52,27 @@ fun CartView(
     navController: NavController,
     viewModel: CartViewModel = koinViewModel()
 ) {
-    val cartItems by viewModel.cartItems.collectAsState()
+    val cartItems by viewModel.cartItems.collectAsStateWithLifecycle()
 
+    CartView(
+        navController = navController,
+        cartItems = cartItems,
+        totalPrice = viewModel.totalPrice,
+        onRemoveItem = viewModel::removeItem,
+        onUpdateQuantity = viewModel::updateQuantity,
+        onClearCart = viewModel::clearCart
+    )
+}
+
+@Composable
+private fun CartView(
+    navController: NavController,
+    cartItems: List<CartItem>,
+    totalPrice: Double,
+    onRemoveItem: (Int) -> Unit,
+    onUpdateQuantity: (Int, Int) -> Unit,
+    onClearCart: () -> Unit
+) {
     Scaffold(
         topBar = {
             TopBar(
@@ -68,12 +90,12 @@ fun CartView(
             if (cartItems.isEmpty()) {
                 EmptyCartView()
             } else {
-                CartView(
+                CartContentView(
                     cartItems = cartItems,
-                    totalPrice = viewModel.totalPrice,
-                    onRemoveItem = viewModel::removeItem,
-                    onUpdateQuantity = viewModel::updateQuantity,
-                    onClearCart = viewModel::clearCart
+                    totalPrice = totalPrice,
+                    onRemoveItem = onRemoveItem,
+                    onUpdateQuantity = onUpdateQuantity,
+                    onClearCart = onClearCart
                 )
             }
         }
@@ -100,7 +122,7 @@ private fun EmptyCartView() {
 
 @SuppressLint("DefaultLocale")
 @Composable
-private fun CartView(
+private fun CartContentView(
     cartItems: List<CartItem>,
     totalPrice: Double,
     onRemoveItem: (Int) -> Unit,
@@ -201,30 +223,42 @@ private fun CartItemCard(
 
 // MARK: - Preview
 
-@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun CartPreview() {
-    val dishRepository: DishRepository = DishRepositoryImpl()
-    val cartRepository: CartRepository = CartRepositoryImpl()
-    val mockViewModel = CartViewModel(cartRepository = cartRepository)
-    mockViewModel.addToCart(dishRepository.dishes[0], 2)
-    mockViewModel.addToCart(dishRepository.dishes[2], 1)
-
+    val mockCartItems = listOf(
+        CartItem.mock(),
+        CartItem.mock(
+            dish = Dish.mock(
+                2,
+                com.sks.theyellowtable.R.string.pasta,
+                com.sks.theyellowtable.R.string.pasta_description,
+                15.50,
+                com.sks.theyellowtable.R.drawable.pasta
+            ),
+            quantity = 2
+        )
+    )
+    
     CartView(
-        navController = rememberNavController(), viewModel = mockViewModel
+        navController = rememberNavController(),
+        cartItems = mockCartItems,
+        totalPrice = 41.48,
+        onRemoveItem = {},
+        onUpdateQuantity = { _, _ -> },
+        onClearCart = {}
     )
 }
 
-@SuppressLint("ViewModelConstructorInComposable")
 @Preview(name = "Empty Cart", showBackground = true, showSystemUi = true)
 @Composable
 private fun EmptyCartPreview() {
-    val cartRepository: CartRepository = CartRepositoryImpl()
-    val mockViewModel = CartViewModel(cartRepository = cartRepository)
-    mockViewModel.clearCart()
-
     CartView(
-        navController = rememberNavController(), viewModel = mockViewModel
+        navController = rememberNavController(),
+        cartItems = emptyList(),
+        totalPrice = 0.0,
+        onRemoveItem = {},
+        onUpdateQuantity = { _, _ -> },
+        onClearCart = {}
     )
 }

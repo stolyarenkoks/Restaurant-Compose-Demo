@@ -27,13 +27,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sks.theyellowtable.R
+import com.sks.theyellowtable.database.dao.MenuItemDao
 import com.sks.theyellowtable.database.model.MenuItemEntity
 import com.sks.theyellowtable.network.APIClient
 import com.sks.theyellowtable.network.APIClientImpl
@@ -51,6 +55,39 @@ fun MenuView(
     navController: NavController,
     viewModel: MenuViewModel = koinViewModel()
 ) {
+    val databaseMenuItems by viewModel.menuItems.observeAsState(emptyList())
+    var orderMenuItems by remember { mutableStateOf(false) }
+    var searchPhrase by remember { mutableStateOf("") }
+
+    val menuItems = if (orderMenuItems) {
+        databaseMenuItems.sortedBy { it.title }
+    } else {
+        databaseMenuItems
+    }
+
+    MenuView(
+        navController = navController,
+        menuItems = menuItems,
+        searchPhrase = searchPhrase,
+        orderMenuItems = orderMenuItems,
+        onOrderMenuItems = {
+            orderMenuItems = !orderMenuItems
+        },
+        onSearchPhraseChanges = {
+            searchPhrase = it
+        }
+    )
+}
+
+@Composable
+private fun MenuView(
+    navController: NavController,
+    menuItems: List<MenuItemEntity>,
+    searchPhrase: String,
+    orderMenuItems: Boolean,
+    onOrderMenuItems: () -> Unit = {},
+    onSearchPhraseChanges: (String) -> Unit = {},
+) {
     Scaffold(
         topBar = {
             TopBar(
@@ -61,16 +98,6 @@ fun MenuView(
             )
         }
     ) { paddingValues ->
-        val databaseMenuItems by viewModel.menuItems.observeAsState(emptyList())
-        var orderMenuItems by remember { mutableStateOf(false) }
-        var searchPhrase by remember { mutableStateOf("") }
-
-        val menuItems = if (orderMenuItems) {
-            databaseMenuItems.sortedBy { it.title }
-        } else {
-            databaseMenuItems
-        }
-
         val filteredMenuItems = if (searchPhrase.isNotEmpty()) {
             menuItems.filter { it.title.contains(searchPhrase, ignoreCase = true) }
         } else {
@@ -97,13 +124,13 @@ fun MenuView(
             ) {
                 OutlinedTextField(
                     value = searchPhrase,
-                    onValueChange = { searchPhrase = it },
+                    onValueChange = onSearchPhraseChanges,
                     label = { Text("Search") },
                     modifier = Modifier.weight(1f)
                 )
-                
+
                 IconButton(
-                    onClick = { orderMenuItems = !orderMenuItems }
+                    onClick = onOrderMenuItems
                 ) {
                     Icon(
                         imageVector = if (orderMenuItems)
@@ -111,9 +138,9 @@ fun MenuView(
                         else
                             Icons.Default.SortByAlpha,
                         contentDescription = "Sort alphabetically",
-                        tint = if (orderMenuItems) 
-                            MaterialTheme.colorScheme.primary 
-                        else 
+                        tint = if (orderMenuItems)
+                            MaterialTheme.colorScheme.primary
+                        else
                             MaterialTheme.colorScheme.onSurface
                     )
                 }
@@ -157,19 +184,21 @@ private fun MenuItemsList(items: List<MenuItemEntity>) {
 
 // MARK: - Preview
 
-@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun MenuPreview() {
-    val apiClient = APIClientImpl()
-    val remoteMenuRepository = RemoteMenuRepositoryImpl(apiClient = apiClient)
-    val localMenuRepository = MenuRepositoryImpl()
-    val mockViewModel = MenuViewModel(
-        remoteMenuRepository = remoteMenuRepository,
-        localMenuRepository = localMenuRepository
+    val mockMenuItems = listOf(
+        MenuItemEntity(1, "Greek Salad", 12.99),
+        MenuItemEntity(2, "Pasta", 15.50),
+        MenuItemEntity(3, "Lasagne", 18.75)
     )
+    
     MenuView(
         navController = rememberNavController(),
-        viewModel = mockViewModel
+        menuItems = mockMenuItems,
+        searchPhrase = "",
+        orderMenuItems = false,
+        onOrderMenuItems = {},
+        onSearchPhraseChanges = {}
     )
 }

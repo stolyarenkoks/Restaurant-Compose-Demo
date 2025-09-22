@@ -13,6 +13,7 @@ import com.sks.theyellowtable.destinations.Cart
 import com.sks.theyellowtable.destinations.DishDetails
 import com.sks.theyellowtable.destinations.Menu
 import com.sks.theyellowtable.models.Dish
+import com.sks.theyellowtable.models.mock
 import com.sks.theyellowtable.repository.DishRepository
 import com.sks.theyellowtable.repository.DishRepositoryImpl
 import com.sks.theyellowtable.views.TopBar
@@ -62,14 +63,21 @@ private fun HomeView(
 
 // MARK: - Preview
 
-@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun HomePreview() {
-    val dishRepository: DishRepository = DishRepositoryImpl()
-    val mockViewModel = HomeViewModel(dishRepository = dishRepository)
+    val mockDishes = listOf(
+        Dish.mock(),
+        Dish(
+            2,
+            com.sks.theyellowtable.R.string.bruschetta,
+            com.sks.theyellowtable.R.string.bruschetta_description,
+            8.50,
+            com.sks.theyellowtable.R.drawable.bruschetta
+        )
+    )
     HomeView(
         navController = rememberNavController(),
-        viewModel = mockViewModel
+        dishes = mockDishes
     )
 }

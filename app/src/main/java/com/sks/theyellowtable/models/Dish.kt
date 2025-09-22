@@ -12,12 +12,18 @@ data class Dish(
     companion object
 }
 
-fun Dish.Companion.mock(): Dish {
+fun Dish.Companion.mock(
+    id: Int = 1,
+    nameResourceId: Int = R.string.greek_salad,
+    descriptionResourceId: Int = R.string.greek_salad_description,
+    price: Double = 12.99,
+    imageResource: Int = R.drawable.greeksalad
+): Dish {
     return Dish(
-        id = 1,
-        nameResourceId = R.string.greek_salad,
-        descriptionResourceId = R.string.greek_salad_description,
-        price = 12.99,
-        imageResource = R.drawable.greeksalad
+        id = id,
+        nameResourceId = nameResourceId,
+        descriptionResourceId = descriptionResourceId,
+        price = price,
+        imageResource = imageResource
     )
 }
