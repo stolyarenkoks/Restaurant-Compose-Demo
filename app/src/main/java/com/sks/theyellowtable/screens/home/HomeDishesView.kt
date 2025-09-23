@@ -30,12 +30,16 @@ fun HomeDishesView(
         WeeklySpecialCard()
         LazyColumn {
             itemsIndexed(dishes) { _, dish ->
-                DishView(
-                    dish = dish,
-                    onClick =  {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    onClick = {
                         onDishSelected(dish.id)
                     }
-                )
+                ) {
+                    DishView(dish = dish)
+                }
             }
         }
     }

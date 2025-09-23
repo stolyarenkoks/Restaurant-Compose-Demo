@@ -2,6 +2,7 @@ package com.sks.theyellowtable.screens.cart
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +21,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,16 +34,16 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sks.theyellowtable.R
 import com.sks.theyellowtable.models.CartItem
-import com.sks.theyellowtable.repository.CartRepository
-import com.sks.theyellowtable.repository.CartRepositoryImpl
-import com.sks.theyellowtable.repository.DishRepository
-import com.sks.theyellowtable.repository.DishRepositoryImpl
 import com.sks.theyellowtable.views.TopBar
 import com.sks.theyellowtable.ui.theme.TheYellowTableColor
 import com.sks.theyellowtable.views.DishView
 import com.sks.theyellowtable.views.StepperView
 import com.sks.theyellowtable.models.Dish
 import com.sks.theyellowtable.models.mock
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 
 // MARK: - View
 
@@ -78,7 +78,7 @@ private fun CartView(
             TopBar(
                 showBackButton = true,
                 showCartIcon = false,
-                onBackClick = { navController.navigateUp() }
+                onBackClick = navController::navigateUp
             )
         }
     ) { paddingValues ->
@@ -120,6 +120,7 @@ private fun EmptyCartView() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("DefaultLocale")
 @Composable
 private fun CartContentView(
@@ -138,17 +139,42 @@ private fun CartContentView(
                 .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(cartItems) { item ->
-                CartItemCard(
-                    cartItem = item,
-                    onRemove = { onRemoveItem(item.dish.id) },
-                    onQuantityChange = { newQuantity ->
-                        onUpdateQuantity(
-                            item.dish.id,
-                            newQuantity
-                        )
+            items(
+                items = cartItems,
+                key = { it.dish.id }
+            ) { item ->
+                val dismissState = rememberSwipeToDismissBoxState(
+                    confirmValueChange = { dismissValue ->
+                        if (dismissValue == SwipeToDismissBoxValue.EndToStart) {
+                            onRemoveItem(item.dish.id)
+                        }
+                        true
                     }
                 )
+
+                SwipeToDismissBox(
+                    state = dismissState,
+                    enableDismissFromStartToEnd = false,
+                    backgroundContent = {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(horizontal = 16.dp),
+                            contentAlignment = Alignment.CenterEnd
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = stringResource(R.string.remove_item)
+                            )
+                        }
+                    }
+                ) {
+                    CartItemCard(
+                        cartItem = item,
+                        onRemove = { onRemoveItem(item.dish.id) },
+                        onQuantityChange = { onUpdateQuantity(item.dish.id, it) }
+                    )
+                }
             }
         }
 
@@ -164,7 +190,8 @@ private fun CartContentView(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(R.string.total), style = MaterialTheme.typography.titleLarge
+                    text = stringResource(R.string.total),
+                    style = MaterialTheme.typography.titleLarge
                 )
                 Text(
                     text = "$${String.format("%.2f", totalPrice)}",
@@ -179,7 +206,8 @@ private fun CartContentView(
                 colors = ButtonDefaults.buttonColors(containerColor = TheYellowTableColor.yellow)
             ) {
                 Text(
-                    text = stringResource(R.string.clear_cart), color = TheYellowTableColor.green
+                    text = stringResource(R.string.clear_cart),
+                    color = TheYellowTableColor.green
                 )
             }
         }
@@ -213,7 +241,8 @@ private fun CartItemCard(
 
                 IconButton(onClick = onRemove) {
                     Icon(
-                        imageVector = Icons.Default.Delete, contentDescription = stringResource(R.string.remove_item)
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = stringResource(R.string.remove_item)
                     )
                 }
             }

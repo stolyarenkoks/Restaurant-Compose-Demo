@@ -23,75 +23,64 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sks.theyellowtable.models.Dish
+import com.sks.theyellowtable.models.mock
 import com.sks.theyellowtable.repository.DishRepository
 
 // MARK: - View
 
 @Composable
 fun DishView(
-    dish: Dish,
-    onClick: () -> Unit = {}
+    dish: Dish
 ) {
-    Card(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        onClick = onClick
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier.weight(1f)
         ) {
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = stringResource(dish.nameResourceId),
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        fontWeight = FontWeight.Bold
-                    )
+            Text(
+                text = stringResource(dish.nameResourceId),
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.Bold
                 )
-                Text(
-                    text = stringResource(dish.descriptionResourceId),
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier
-                        .fillMaxWidth(0.75f)
-                        .padding(top = 4.dp)
-                )
-                Text(
-                    text = "$${dish.price}",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        fontWeight = FontWeight.Bold
-                    ),
-                    modifier = Modifier.padding(top = 4.dp)
-                )
-            }
-
-            Image(
-                painter = painterResource(id = dish.imageResource),
-                contentDescription = stringResource(dish.nameResourceId),
+            )
+            Text(
+                text = stringResource(dish.descriptionResourceId),
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier
-                    .height(120.dp)
-                    .aspectRatio(1f)
-                    .clip(RoundedCornerShape(10.dp)),
-                contentScale = ContentScale.Crop
+                    .fillMaxWidth(0.75f)
+                    .padding(top = 4.dp)
+            )
+            Text(
+                text = "$${dish.price}",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight.Bold
+                ),
+                modifier = Modifier.padding(top = 4.dp)
             )
         }
+
+        Image(
+            painter = painterResource(id = dish.imageResource),
+            contentDescription = stringResource(dish.nameResourceId),
+            modifier = Modifier
+                .height(120.dp)
+                .aspectRatio(1f)
+                .clip(RoundedCornerShape(10.dp)),
+            contentScale = ContentScale.Crop
+        )
     }
 }
 
 // MARK: - Preview
 
-// Need to fix it.
-
-//@Preview
-//@Composable
-//private fun DishViewPreview() {
-//    val dishRepository: DishRepository = DishRepositoryImpl()
-//    DishView(
-//        dish = dishRepository.getDish(id = 1)!!,
-//        onClick = {}
-//    )
-//}
+@Preview
+@Composable
+private fun DishViewPreview() {
+    DishView(
+        dish = Dish.mock()
+    )
+}
