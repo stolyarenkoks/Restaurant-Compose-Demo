@@ -3,10 +3,13 @@ package com.sks.theyellowtable.screens.login
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -18,9 +21,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -73,6 +81,16 @@ private fun LoginView(
 ) {
     val context = LocalContext.current
     val invalidCredentialsMessage = stringResource(R.string.invalid_credentials)
+    
+    // Focus and keyboard management
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val passwordFocusRequester = remember { FocusRequester() }
+
+    val hideKeyboard = {
+        keyboardController?.hide()
+        focusManager.clearFocus()
+    }
 
     Column(
         modifier = Modifier
@@ -92,6 +110,8 @@ private fun LoginView(
             value = username,
             onValueChange = onUsernameChanged,
             label = { Text(text = stringResource(R.string.username)) },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            singleLine = true,
             modifier = Modifier.padding(10.dp)
         )
 
@@ -100,7 +120,16 @@ private fun LoginView(
             onValueChange = onPasswordChanged,
             label = { Text(text = stringResource(R.string.password)) },
             visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.padding(10.dp),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    hideKeyboard()
+                }
+            ),
+            singleLine = true,
+            modifier = Modifier
+                .padding(10.dp)
+                .focusRequester(passwordFocusRequester)
         )
 
         Button(
@@ -149,7 +178,7 @@ private fun HintText(showHint: Boolean) {
 @Composable
 private fun LoginPreview() {
     LoginView(
-        username = "demo",
+        username = "Konstantin",
         password = "",
         onUsernameChanged = {},
         onPasswordChanged = {},
