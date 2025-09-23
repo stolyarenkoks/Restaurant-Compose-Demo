@@ -3,10 +3,15 @@ package com.sks.theyellowtable.views
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -30,41 +35,50 @@ fun TopBar(
     onBackClick: () -> Unit = {},
     onCartClick: () -> Unit = {}
 ) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxWidth()
-            .background(TheYellowTableColor.lightGray),
-        verticalAlignment = Alignment.CenterVertically,
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(TheYellowTableColor.lightGray)
     ) {
-        if (showBackButton) {
-            IconButton(onClick = onBackClick) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.back),
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-        } else {
-            IconButton(onClick = {}) {}
-        }
+        Spacer(Modifier.windowInsetsTopHeight(WindowInsets.statusBars))
         
-        Image(
-            painter = painterResource(id = R.drawable.logo),
-            contentDescription = stringResource(R.string.the_yellow_table_logo),
-            modifier = Modifier.fillMaxWidth(0.5F)
-                .padding(horizontal = 56.dp)
-        )
-        
-        if (showCartIcon) {
-            IconButton(onClick = onCartClick) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_cart),
-                    contentDescription = stringResource(R.string.cart),
-                    modifier = Modifier.size(24.dp)
-                )
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            if (showBackButton) {
+                IconButton(onClick = onBackClick) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.back),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            } else {
+                IconButton(onClick = {}) {}
             }
-        } else {
-            IconButton(onClick = {}) {}
+            
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = stringResource(R.string.the_yellow_table_logo),
+                modifier = Modifier.fillMaxWidth(0.5F)
+                    .padding(horizontal = 56.dp)
+            )
+            
+            if (showCartIcon) {
+                IconButton(onClick = onCartClick) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_cart),
+                        contentDescription = stringResource(R.string.cart),
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            } else {
+                IconButton(onClick = {}) {}
+            }
         }
     }
 }

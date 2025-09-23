@@ -7,8 +7,11 @@ import android.util.Log
 import android.view.WindowInsetsController
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.WindowCompat
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -44,6 +47,8 @@ class MainActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        enableEdgeToEdge()
+
         window.decorView.post {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 window.insetsController?.setSystemBarsAppearance(
@@ -72,12 +77,13 @@ private fun MainView(isUserSignedIn: Boolean = false) {
     val currentRoute = navBackStackEntry?.destination?.route
 
     Scaffold(
-        modifier = Modifier,
+        modifier = Modifier.fillMaxSize(),
         bottomBar = {
             if (shouldShowBottomBar(isUserSignedInState, currentRoute)) {
                 BottomBar(navController = navController)
             }
         },
+        contentWindowInsets = WindowInsets(0),
         content = { paddingValues ->
             Surface(
                 modifier = Modifier
