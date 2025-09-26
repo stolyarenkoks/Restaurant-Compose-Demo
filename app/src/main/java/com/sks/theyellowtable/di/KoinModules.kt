@@ -1,7 +1,6 @@
 package com.sks.theyellowtable.di
 
 import android.content.Context
-import androidx.room.Database
 import androidx.room.Room
 import com.sks.theyellowtable.database.AppDatabase
 import com.sks.theyellowtable.database.dao.MenuItemDao
@@ -21,8 +20,6 @@ import com.sks.theyellowtable.screens.home.HomeViewModel
 import com.sks.theyellowtable.screens.login.LoginViewModel
 import com.sks.theyellowtable.screens.menu.MenuViewModel
 import com.sks.theyellowtable.screens.profile.ProfileViewModel
-import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 

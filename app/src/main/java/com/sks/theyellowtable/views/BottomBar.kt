@@ -2,7 +2,6 @@ package com.sks.theyellowtable.views
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,8 +13,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sks.theyellowtable.destinations.Home
 import com.sks.theyellowtable.destinations.Profile
-import com.sks.theyellowtable.ui.theme.TheYellowTableColor
-import com.sks.theyellowtable.ui.theme.TheYellowTableTheme
 
 // MARK: - View
 

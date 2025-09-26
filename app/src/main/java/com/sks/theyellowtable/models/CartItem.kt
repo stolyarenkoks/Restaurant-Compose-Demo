@@ -1,7 +1,5 @@
 package com.sks.theyellowtable.models
 
-import com.sks.theyellowtable.R
-
 data class CartItem(
     val dish: Dish,
     val quantity: Int

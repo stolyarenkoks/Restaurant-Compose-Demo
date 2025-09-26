@@ -1,6 +1,5 @@
 package com.sks.theyellowtable.screens.home
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -14,8 +13,6 @@ import com.sks.theyellowtable.destinations.DishDetails
 import com.sks.theyellowtable.destinations.Menu
 import com.sks.theyellowtable.models.Dish
 import com.sks.theyellowtable.models.mock
-import com.sks.theyellowtable.repository.DishRepository
-import com.sks.theyellowtable.repository.DishRepositoryImpl
 import com.sks.theyellowtable.views.TopBar
 
 // MARK: - View

@@ -12,8 +12,6 @@ import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.*
-import kotlinx.coroutines.Dispatchers
 import org.junit.Rule
 import com.sks.theyellowtable.utils.TestDispatcherRule
 

@@ -1,10 +1,7 @@
 package com.sks.theyellowtable.repository
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.room.Room
-import com.sks.theyellowtable.database.AppDatabase
 import com.sks.theyellowtable.database.dao.MenuItemDao
 import com.sks.theyellowtable.database.model.MenuItemEntity
 import com.sks.theyellowtable.network.model.MenuItemResponse

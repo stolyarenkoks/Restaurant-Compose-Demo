@@ -1,6 +1,5 @@
 package com.sks.theyellowtable.screens.dishDetails
 
-import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -30,17 +29,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.sks.theyellowtable.models.Dish
 import com.sks.theyellowtable.views.TopBar
 import com.sks.theyellowtable.ui.theme.TheYellowTableColor
 import com.sks.theyellowtable.views.StepperView
 import com.sks.theyellowtable.R
 import com.sks.theyellowtable.models.mock
-import com.sks.theyellowtable.repository.CartRepository
-import com.sks.theyellowtable.repository.CartRepositoryImpl
-import com.sks.theyellowtable.repository.DishRepository
-import com.sks.theyellowtable.repository.DishRepositoryImpl
 
 // MARK: - View
 

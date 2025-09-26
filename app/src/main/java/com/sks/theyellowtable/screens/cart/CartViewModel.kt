@@ -6,7 +6,6 @@ import com.sks.theyellowtable.models.CartItem
 import com.sks.theyellowtable.models.Dish
 import com.sks.theyellowtable.repository.CartRepository
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class CartViewModel(

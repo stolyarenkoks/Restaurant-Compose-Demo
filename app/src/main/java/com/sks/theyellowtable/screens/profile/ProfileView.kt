@@ -28,7 +28,6 @@ import com.sks.theyellowtable.R
 import com.sks.theyellowtable.views.TopBar
 import com.sks.theyellowtable.ui.theme.TheYellowTableColor
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.capitalize
 
 // MARK: - View
 

@@ -1,9 +1,7 @@
 package com.sks.theyellowtable.repository
 
 import com.sks.theyellowtable.R
-import com.sks.theyellowtable.models.CartItem
 import com.sks.theyellowtable.models.Dish
-import kotlinx.coroutines.flow.StateFlow
 
 interface DishRepository {
     val dishes: List<Dish>
