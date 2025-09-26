@@ -80,7 +80,8 @@ private fun CartView(
                 showCartIcon = false,
                 onBackClick = navController::navigateUp
             )
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
         Column(
             modifier = Modifier

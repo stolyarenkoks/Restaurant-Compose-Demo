@@ -64,7 +64,8 @@ fun DishDetailsView(
                 showCartIcon = false,
                 onBackClick = { navController.navigateUp() }
             )
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
         uiState.dish?.let { dish ->
             DishDetailsView(

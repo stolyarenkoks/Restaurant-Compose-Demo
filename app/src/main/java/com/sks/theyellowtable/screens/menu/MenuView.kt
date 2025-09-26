@@ -96,7 +96,8 @@ private fun MenuView(
                     navController.navigateUp()
                 }
             )
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
         val filteredMenuItems = if (searchPhrase.isNotEmpty()) {
             menuItems.filter { it.title.contains(searchPhrase, ignoreCase = true) }

@@ -17,7 +17,16 @@ private val DarkColorScheme = darkColorScheme(
 
 private val LightColorScheme = lightColorScheme(
     primary = TheYellowTableColor.yellow,
-    secondary = TheYellowTableColor.pink
+    secondary = TheYellowTableColor.pink,
+    background = TheYellowTableColor.lightGray,
+    surface = TheYellowTableColor.lightGray,
+    surfaceContainer = TheYellowTableColor.lightGray,
+    surfaceContainerLow = TheYellowTableColor.lightGray,
+    surfaceContainerLowest = TheYellowTableColor.lightGray,
+    surfaceContainerHigh = TheYellowTableColor.lightGray,
+    surfaceContainerHighest = TheYellowTableColor.lightGray,
+    primaryContainer = TheYellowTableColor.lightGray,
+    tertiaryContainer = TheYellowTableColor.lightGray
 )
 
 @Composable

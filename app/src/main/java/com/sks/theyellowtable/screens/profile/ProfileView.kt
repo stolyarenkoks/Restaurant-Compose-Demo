@@ -52,7 +52,8 @@ private fun ProfileView(
     onUserSignedOut: () -> Unit
 ) {
     Scaffold(
-        topBar = { TopBar() }
+        topBar = { TopBar() },
+        containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
         Column(
             modifier = Modifier
